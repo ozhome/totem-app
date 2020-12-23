@@ -50,7 +50,7 @@ const Item: React.FC<ItemProps> = ({item}) => {
         <ImageContainer>
           <Image
             source={{uri: `data:image/png;base64,${item.image}`}}
-            resizeMode="cover"
+            resizeMode="contain"
           />
         </ImageContainer>
         <Info>
@@ -60,7 +60,7 @@ const Item: React.FC<ItemProps> = ({item}) => {
           <Price>{`R$ ${formatReal(item.price)}`}</Price>
         </Info>
         <ContainerItem>
-          <ButtonItem onPress={handlePlus}>
+          <ButtonItem onPress={handleMinus}>
             <Icon name="minus-circle" color="#000" size={40} />
           </ButtonItem>
           <ContainerItemText>{item.quantity}</ContainerItemText>

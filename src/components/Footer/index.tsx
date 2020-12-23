@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 

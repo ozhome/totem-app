@@ -13,6 +13,8 @@ export const Container = styled.View`
   justify-content: center;
   align-items: center;
 
+  margin-bottom: 20px;
+
   color: #000;
 `;
 

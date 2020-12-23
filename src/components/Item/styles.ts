@@ -5,6 +5,8 @@ export const Container = styled.View`
   width: 100%;
   padding: 10px;
 
+  margin-top: 25px;
+
   border: 2px solid black;
 
   position: relative;
@@ -52,8 +54,8 @@ export const ImageContainer = styled.View`
 `;
 
 export const Image = styled.Image`
-  max-width: 100%;
-  max-height: 100%;
+  width: 100%;
+  height: 100%;
 `;
 
 export const Info = styled.View`
@@ -69,17 +71,16 @@ export const Info = styled.View`
 `;
 
 export const ScrollView = styled.ScrollView`
-  width: 55%;
+  width: 100%;
   height: 80%;
-  padding: 8px;
+  padding-bottom: 15px;
 
   position: relative;
+  overflow: hidden;
 `;
 
 export const ScrollViewText = styled.Text`
   width: 100%;
-  max-height: 70%;
-  padding: 6px;
   font-size: 20px;
 `;
 

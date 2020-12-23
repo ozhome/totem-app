@@ -7,3 +7,10 @@ export const Container = styled.View`
 
   flex-direction: row;
 `;
+
+export const Content = styled.View`
+  width: 70%;
+  height: 100%;
+
+  position: relative;
+`;

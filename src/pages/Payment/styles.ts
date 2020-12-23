@@ -87,10 +87,10 @@ export const ModalContent = styled.View`
 
   margin-top: 25px;
 
-  width: 80%;
-  height: 200px;
+  width: 70%;
+  height: 400px;
 
-  padding: 30px;
+  padding: 50px;
 
   display: flex;
   flex-direction: column;

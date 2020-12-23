@@ -18,7 +18,7 @@ export const Message = styled.View`
 
   position: relative;
 
-  display: flex;
+  flex-direction: row;
   justify-content: space-between;
 `;
 

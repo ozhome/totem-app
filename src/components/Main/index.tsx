@@ -2,8 +2,12 @@ import React from 'react';
 
 import {Container} from './styles';
 
-const Main: React.FC = ({children}) => {
-  return <Container>{children}</Container>;
+interface iMain {
+  show?: boolean;
+}
+
+const Main: React.FC<IMain> = ({show, children}) => {
+  return <Container show={show}>{children}</Container>;
 };
 
 export default Main;

@@ -4,6 +4,7 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import {useNavigation} from '@react-navigation/native';
 
 import ItemList from '../ItemList';
+import Button from '../Button';
 
 import {useCart} from '../../hooks/cart';
 
@@ -18,8 +19,6 @@ import {
   IconText,
   Total,
   TotalText,
-  Button,
-  ButtonText,
 } from './styles';
 import {useInventory} from '../../hooks/inventory';
 
@@ -60,11 +59,13 @@ const Cart: React.FC<CartProps> = ({showButtons = true}) => {
         <TotalText>{`Total R$ ${FormatReal(amount)}`}</TotalText>
         {showButtons && cart.length > 0 && (
           <>
-            <Button onPress={handleClear}>
-              <ButtonText>Limpar sacola</ButtonText>
+            <Button style={{backgroundColor: '#fff'}} onPress={handleClear}>
+              Limpar sacola
             </Button>
-            <Button onPress={() => navigate('Payment')}>
-              <ButtonText>Finalizar compra</ButtonText>
+            <Button
+              style={{backgroundColor: '#fff'}}
+              onPress={() => navigate('Payment')}>
+              Finalizar compra
             </Button>
           </>
         )}

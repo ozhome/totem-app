@@ -3,13 +3,13 @@ import styled from 'styled-components/native';
 export const Container = styled.TouchableOpacity`
   background: #fff;
   height: 240px;
-  width: 300px;
+  flex-grow: 1;
+  flex-basis: 0;
 
   margin-right: 15px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
+
+  position: relative;
 
   margin-bottom: 40px;
 `;
@@ -23,8 +23,14 @@ export const Text = styled.Text`
   height: 90px;
 `;
 
+export const ImageContainer = styled.View`
+  height: 140px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+`;
+
 export const Image = styled.Image`
-  padding-bottom: 5px;
-  max-height: 180px;
-  max-width: 200px;
+  width: 100%;
+  height: 100%;
 `;

@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {useInventory} from '../../hooks/inventory';
 
-import {Container, Text, Image} from './styles';
+import {Container, Text, Image, ImageContainer} from './styles';
 
 interface CategoryProps {
   image: string;
@@ -23,10 +23,12 @@ const Category: React.FC<CategoryProps> = ({image, name, id}) => {
   return (
     <Container onPress={handleCategory}>
       <Text>{name}</Text>
-      <Image
-        source={{uri: `data:image/png;base64,${image}`}}
-        resizeMode="cover"
-      />
+      <ImageContainer>
+        <Image
+          source={{uri: `data:image/png;base64,${image}`}}
+          resizeMode="contain"
+        />
+      </ImageContainer>
     </Container>
   );
 };

@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = ({isHome = false}) => {
           <TitleText>Bem vindo a Oz</TitleText>
           <TitleTexSub>Toque na tela para fazer seu pedido</TitleTexSub>
         </Title>
-        <Image source={logo} resizeMode="cover" />
+        <Image source={logo} resizeMode="contain" />
       </Message>
       {!isHome && (
         <SubCategories>
@@ -41,6 +41,7 @@ const Header: React.FC<HeaderProps> = ({isHome = false}) => {
           <FlatList
             data={categories.filter((categ) => categ.has_product)}
             keyExtractor={(item) => `${item.id}`}
+            horizontal
             renderItem={({item}) => (
               <SubCategory name={item.name} id={item.id} />
             )}

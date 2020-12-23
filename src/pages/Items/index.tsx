@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {FlatList} from 'react-native';
 
 import Header from '../../components/Header';
@@ -6,6 +6,7 @@ import Footer from '../../components/Footer';
 import Item from '../../components/Item';
 import Main from '../../components/Main';
 import Cart from '../../components/Cart';
+import Modal from '../../components/Modal';
 
 import {useInventory} from '../../hooks/inventory';
 import {useCart} from '../../hooks/cart';
@@ -15,10 +16,12 @@ import {Container, Content} from './styles';
 const Items: React.FC = () => {
   const {selectedSub, products, getInventory} = useInventory();
   const {cart} = useCart();
+  const [modal, setModal] = useState(true);
 
   useEffect(() => {
     const get = async () => {
       await getInventory(cart);
+      setModal(false);
     };
 
     get();
@@ -27,6 +30,7 @@ const Items: React.FC = () => {
 
   return (
     <Container>
+      <Modal visible={modal} />
       <Cart />
       <Content>
         <Main>

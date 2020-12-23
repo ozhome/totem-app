@@ -30,6 +30,7 @@ export const Icon = styled.View`
 `;
 
 export const IconText = styled.Text`
+  color: #fff;
   text-align: center;
   font-weight: 700;
   font-size: 32px;

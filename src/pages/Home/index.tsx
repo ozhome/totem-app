@@ -8,7 +8,7 @@ import Cart from '../../components/Cart';
 
 import {useInventory} from '../../hooks/inventory';
 
-import {Container} from './styles';
+import {Container, Content} from './styles';
 
 const Home: React.FC = () => {
   const {categories, getCategories} = useInventory();
@@ -23,18 +23,19 @@ const Home: React.FC = () => {
   return (
     <Container>
       <Cart />
-      <Main>
-        <Header isHome />
-        <FlatList
-          data={categories.filter((ca) => !ca.parent_id)}
-          keyExtractor={(item) => `${item.id}`}
-          numColumns={2}
-          style={{marginTop: 36}}
-          renderItem={({item}) => (
-            <Category image={item.image} name={item.name} id={item.id} />
-          )}
-        />
-      </Main>
+      <Content>
+        <Main show>
+          <Header isHome />
+          <FlatList
+            data={categories.filter((ca) => !ca.parent_id)}
+            keyExtractor={(item) => `${item.id}`}
+            numColumns={2}
+            renderItem={({item}) => (
+              <Category image={item.image} name={item.name} id={item.id} />
+            )}
+          />
+        </Main>
+      </Content>
     </Container>
   );
 };
