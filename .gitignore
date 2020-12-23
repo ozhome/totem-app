@@ -1,0 +1,108 @@
+# OSX
+#
+.expo
+.DS_Store
+metro-cache/
+haste-map/
+.jest/*
+reports/
+coverage/
+# Xcode
+#
+build/
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+!default.mode1v3
+*.mode2v3
+!default.mode2v3
+*.perspectivev3
+!default.perspectivev3
+xcuserdata
+*.xccheckout
+*.moved-aside
+DerivedData
+*.hmap
+*.ipa
+*.xcuserstate
+project.xcworkspace
+ios/build/
+public_storybook
+
+android/app/production
+android/app/build
+
+ios/Podfile.lock
+ios/package-json.lock
+
+storybook-static/
+
+
+# Android/IntelliJ
+#
+.idea
+local.properties
+*.iml
+
+# node.js
+
+android/app/release
+android/app/BUCK
+android/app/proguard-rules.pro
+android/keystores
+android/.gradle
+!android/app/src/main/res/*
+!android/app/src/main/assets/fonts/*
+!android/app/src/main/AndroidManifest.xml
+
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# BUCK
+buck-out/
+\.buckd/
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+*/fastlane/report.xml
+*/fastlane/Preview.html
+*/fastlane/screenshots
+
+# Bundle artifact
+*.jsbundle
+.babelrc
+
+#VSCODE TRASH
+# .vscode
+
+#Android
+android/.gradle/
+!android/gradle.properties
+!android/app/build.gradle
+
+fastlane/report.xml
+android/.settings/org.eclipse.buildship.core.prefs
+android/app/.classpath
+android/app/production/
+android/app/local.properties
+android/local.properties
+android/.gradle/*
+
+
+# Sonar files
+.scannerwork/
+sonar-project.properties
+ios/Pods/
+fastlane/Matchfile
+ios/Pods/
+
+package-lock.json
+yarn.lock
+public_storybook/
+.expo
