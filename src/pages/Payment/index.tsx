@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import {useCart} from '../../hooks/cart';
@@ -33,8 +33,9 @@ import {
 const Payment: React.FC = () => {
   const {store} = useAuth();
   const {cart, amount, clearCart} = useCart();
-  const {payment} = useIzettle();
+  const {payment, refund} = useIzettle();
   const {navigate} = useNavigation();
+  const hash = useRef('');
 
   const [typeCard, setTypeCard] = useState<'credit' | 'debit' | 'amount' | ''>(
     '',
@@ -61,6 +62,7 @@ const Payment: React.FC = () => {
     setModalVisible(true);
     setPaymentCompleted(false);
     setPaymentError(false);
+    hash.current = 'null';
 
     if (typeCard === '' || name === '') {
       setModalText('Por favor selecione o tipo de cartão e preencha seu nome.');
@@ -94,10 +96,10 @@ const Payment: React.FC = () => {
 
       setModalText('Realize o pagamento na maquina de cartão.');
 
-      let hash: PaymentResponse = {hash: 'amount', status: 'ok'};
       if (typeCard !== 'amount') {
-        hash = await payment(amount);
+        const response = await payment(amount);
         setModalText('Pagamento aprovado., emitindo NFC');
+        hash.current = response.hash;
       }
 
       setModalText('Emitindo NFC');
@@ -113,19 +115,26 @@ const Payment: React.FC = () => {
         email,
         callbackId: store.id,
         card: typeCard === 'amount' ? 'debit' : typeCard,
-        idIzettle: hash.hash,
+        idIzettle: hash.current,
       };
 
       await api.post('/orders/create', body);
     } catch (err) {
-      setModalText('Erro ao processar o pagamento');
-      setPaymentCompleted(true);
-      setPaymentError(true);
+      if (hash.current !== 'null') {
+        setModalText('Erro, processando estorno');
+        await refund(hash.current);
+        setPaymentCompleted(true);
+        setPaymentError(true);
+      } else {
+        setModalText('Erro ao fazer o pagamento');
+        setPaymentCompleted(true);
+        setPaymentError(true);
+      }
     }
-  }, [amount, cart, cpf, email, name, payment, store, typeCard]);
+  }, [amount, cart, cpf, email, name, payment, refund, store, typeCard]);
 
   const checkOrder = useCallback(
-    (status: 'success' | 'error') => {
+    async (status: 'success' | 'error') => {
       if (status === 'success') {
         if (typeCard === 'amount') {
           setModalText('Por favor finalize seu pedido no balcão.');
@@ -135,11 +144,12 @@ const Payment: React.FC = () => {
         setPaymentCompleted(true);
       } else {
         setModalText('Erro ao emitir NFC, realizando estorno.');
+        await refund(hash.current);
         setPaymentCompleted(true);
         setPaymentError(true);
       }
     },
-    [typeCard],
+    [refund, typeCard],
   );
 
   useEffect((): any => {
