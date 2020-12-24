@@ -5,7 +5,7 @@ interface SubCategoryProps {
 }
 
 export const Container = styled.TouchableOpacity`
-  height: 60px;
+  height: 100%;
   margin: 0 22px;
 `;
 

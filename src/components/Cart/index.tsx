@@ -30,7 +30,7 @@ const Cart: React.FC<CartProps> = ({showButtons = true}) => {
   const {cart, amount, clearCart} = useCart();
   const {clearInventory} = useInventory();
 
-  const {navigate} = useNavigation();
+  const {navigate, goBack} = useNavigation();
 
   const handleClear = useCallback(() => {
     clearCart();
@@ -57,15 +57,15 @@ const Cart: React.FC<CartProps> = ({showButtons = true}) => {
 
       <Total>
         <TotalText>{`Total R$ ${FormatReal(amount)}`}</TotalText>
-        {showButtons && cart.length > 0 && (
+        {cart.length > 0 && (
           <>
             <Button style={{backgroundColor: '#fff'}} onPress={handleClear}>
               Limpar sacola
             </Button>
             <Button
               style={{backgroundColor: '#fff'}}
-              onPress={() => navigate('Payment')}>
-              Finalizar compra
+              onPress={() => (!showButtons ? goBack() : navigate('Payment'))}>
+              {!showButtons ? 'Voltar' : 'Finalizar compra'}
             </Button>
           </>
         )}

@@ -77,7 +77,8 @@ const CartProvider: React.FC = ({children}) => {
   }, []);
 
   useEffect(() => {
-    setAmount(cart.reduce((acc, cur) => acc + cur.price * cur.quantity, 0));
+    const value = cart.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
+    setAmount(parseFloat(value.toFixed(2)));
   }, [cart]);
 
   return (

@@ -46,7 +46,7 @@ export const Cards = styled.View`
 `;
 
 export const CardButton = styled.View`
-  width: 45%;
+  width: 30%;
 `;
 
 export const Name = styled.View`

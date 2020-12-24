@@ -67,23 +67,11 @@ export const Total = styled.View`
 
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
 `;
 
 export const TotalText = styled.Text`
   font-size: 28px;
-`;
-
-export const Button = styled.TouchableOpacity`
-  width: 100%;
-  height: 60px;
-
-  font-size: 28px;
-  font-weight: 400;
-  background-color: #fff;
-`;
-
-export const ButtonText = styled.Text`
-  font-size: 28px;
+  color: #fff;
 `;
