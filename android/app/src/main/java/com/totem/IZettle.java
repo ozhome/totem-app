@@ -127,7 +127,7 @@ public class IZettle extends ReactContextBaseJavaModule {
         .enableLogin(true) // Mandatory to set
         .build();
 
-      getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+      getCurrentActivity(). (intent, REQUEST_CODE_PAYMENT);
 
     }catch (Exception error) {
       promise.reject("no_events", error.getMessage(),error.getCause());
@@ -135,7 +135,44 @@ public class IZettle extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void openRefund(String internalTraceId, Promise promise) {
+    try {
+
+      mPromisePayment = promise;
+
+      IZettleSDK.Instance.getRefundsManager().retrieveCardPayment(internalTraceId, new RefundCallback());
+
+    }catch (Exception error) {
+      promise.reject("no_events", error.getMessage(),error.getCause());
+
+    }
+
+  }
+
   private Promise mPromisePayment;
+
+  private class RefundCallback implements RefundsManager.Callback<CardPaymentPayload, RetrieveCardPaymentFailureReason> {
+
+        @Override
+        public void onFailure(RetrieveCardPaymentFailureReason reason) {
+            mPromisePayment.reject("no_events", "Refund Failed");
+        }
+
+        @Override
+        public void onSuccess(CardPaymentPayload payload) {
+          TransactionReference reference = new TransactionReference.Builder(payload.getReferenceId())
+            .put("REFUND_EXTRA_INFO", "Started from home screen")
+            .build();
+
+          Intent intent = new RefundsActivity.IntentBuilder(MainActivity.this)
+            .cardPayment(payload)
+            .reference(reference)
+            .build();
+
+          getCurrentActivity(). (intent, REQUEST_CODE_REFUND);
+        }
+    }
 
 
   private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
