@@ -20,6 +20,9 @@ import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.izettle.android.commons.state.StateObserver;
 import com.izettle.payments.android.payment.TransactionReference;
+import com.izettle.payments.android.payment.refunds.RefundsManager;
+import com.izettle.payments.android.payment.refunds.CardPaymentPayload;
+import com.izettle.payments.android.payment.refunds.RetrieveCardPaymentFailureReason;
 import com.izettle.payments.android.sdk.IZettleSDK;
 import com.izettle.payments.android.sdk.User;
 import com.izettle.payments.android.ui.payment.CardPaymentActivity;
@@ -27,6 +30,7 @@ import com.izettle.payments.android.ui.payment.CardPaymentResult;
 import com.izettle.payments.android.ui.readers.CardReadersActivity;
 import com.izettle.payments.android.ui.refunds.RefundResult;
 import com.izettle.payments.android.ui.refunds.RefundsActivity;
+
 
 import java.util.UUID;
 
@@ -127,7 +131,7 @@ public class IZettle extends ReactContextBaseJavaModule {
         .enableLogin(true) // Mandatory to set
         .build();
 
-      getCurrentActivity(). (intent, REQUEST_CODE_PAYMENT);
+      getCurrentActivity() .(intent, REQUEST_CODE_PAYMENT);
 
     }catch (Exception error) {
       promise.reject("no_events", error.getMessage(),error.getCause());
@@ -137,17 +141,10 @@ public class IZettle extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void openRefund(String internalTraceId, Promise promise) {
-    try {
 
-      mPromisePayment = promise;
+    mPromisePayment = promise;
 
-      IZettleSDK.Instance.getRefundsManager().retrieveCardPayment(internalTraceId, new RefundCallback());
-
-    }catch (Exception error) {
-      promise.reject("no_events", error.getMessage(),error.getCause());
-
-    }
-
+    IZettleSDK.Instance.getRefundsManager().retrieveCardPayment(internalTraceId, new RefundCallback());
   }
 
   private Promise mPromisePayment;
@@ -156,24 +153,25 @@ public class IZettle extends ReactContextBaseJavaModule {
 
         @Override
         public void onFailure(RetrieveCardPaymentFailureReason reason) {
-            mPromisePayment.reject("no_events", "Refund Failed");
+            mPromisePayment.reject("no_events", "Payment Failed");
         }
 
         @Override
         public void onSuccess(CardPaymentPayload payload) {
-          TransactionReference reference = new TransactionReference.Builder(payload.getReferenceId())
-            .put("REFUND_EXTRA_INFO", "Started from home screen")
-            .build();
+            TransactionReference reference = new TransactionReference.Builder(payload.getReferenceId())
+              .put("REFUND_EXTRA_INFO", "Started from home screen")
+              .build();
 
-          Intent intent = new RefundsActivity.IntentBuilder(MainActivity.this)
-            .cardPayment(payload)
-            .reference(reference)
-            .build();
+            Intent intent = new RefundsActivity.IntentBuilder(reactContext.getApplicationContext())
+              .cardPayment(payload)
+              .receiptNumber("#123456")
+              .taxAmount(payload.getAmount() / 10)
+              .reference(reference)
+              .build();
 
-          getCurrentActivity(). (intent, REQUEST_CODE_REFUND);
+            getCurrentActivity().(intent, REQUEST_CODE_REFUND);
         }
     }
-
 
   private final ActivityEventListener mActivityEventListener = new BaseActivityEventListener() {
     @Override
