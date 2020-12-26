@@ -131,7 +131,7 @@ public class IZettle extends ReactContextBaseJavaModule {
         .enableLogin(true) // Mandatory to set
         .build();
 
-      getCurrentActivity() .(intent, REQUEST_CODE_PAYMENT);
+      getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
 
     }catch (Exception error) {
       promise.reject("no_events", error.getMessage(),error.getCause());
@@ -169,7 +169,7 @@ public class IZettle extends ReactContextBaseJavaModule {
               .reference(reference)
               .build();
 
-            getCurrentActivity().(intent, REQUEST_CODE_REFUND);
+           getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
         }
     }
 
