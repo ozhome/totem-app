@@ -98,24 +98,23 @@ const Payment: React.FC = () => {
 
       if (typeCard !== 'amount') {
         const response = await payment(amount);
-        setModalText('Pagamento aprovado., emitindo NFC');
+        setModalText('Pagamento aprovado, emitindo NFC');
         hash.current = response.hash;
       }
 
       setModalText('Emitindo NFC');
 
       const body = {
-        store: store.companyId,
         amount,
+        store: store.companyId,
         products,
-        shipping: false,
-        manager: store.id,
-        name,
-        cpf: cpf.replace(/\D/g, ''),
-        email,
         callbackId: store.id,
         card: typeCard === 'amount' ? 'debit' : typeCard,
         idIzettle: hash.current,
+        name,
+        cpf: cpf.replace(/\D/g, ''),
+        email,
+        shipping: false,
       };
 
       await api.post('/orders/create', body);

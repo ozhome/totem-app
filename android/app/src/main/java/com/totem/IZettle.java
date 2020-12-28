@@ -127,7 +127,7 @@ public class IZettle extends ReactContextBaseJavaModule {
         .amount(amountValue)
         .reference(reference)
         .enableTipping(false) // Only for markets with tipping support
-        .enableInstalments(false) // Only for markets with installments support
+        .enableInstalments(true) // Only for markets with installments support
         .enableLogin(true) // Mandatory to set
         .build();
 
@@ -153,7 +153,7 @@ public class IZettle extends ReactContextBaseJavaModule {
 
         @Override
         public void onFailure(RetrieveCardPaymentFailureReason reason) {
-            mPromisePayment.reject("no_events", "Payment Failed");
+            mPromisePayment.reject("no_events", "Refund Failed");
         }
 
         @Override
@@ -164,12 +164,10 @@ public class IZettle extends ReactContextBaseJavaModule {
 
             Intent intent = new RefundsActivity.IntentBuilder(reactContext.getApplicationContext())
               .cardPayment(payload)
-              .receiptNumber("#123456")
-              .taxAmount(payload.getAmount() / 10)
               .reference(reference)
               .build();
 
-           getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+           getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_REFUND);
         }
     }
 
