@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 
 import {useCart} from '../../hooks/cart';
 import {useAuth} from '../../hooks/auth';
-import {useIzettle, PaymentResponse} from '../../hooks/izettle';
+import {useIzettle} from '../../hooks/izettle';
 
 import api from '../../services/api';
 import socket from '../../services/socket';
@@ -37,7 +37,7 @@ const Payment: React.FC = () => {
   const {navigate} = useNavigation();
   const hash = useRef('');
 
-  const [typeCard, setTypeCard] = useState<'credit' | 'debit' | 'amount' | ''>(
+  const [typeCard, setTypeCard] = useState<'credit' | 'debit' | 'cash' | ''>(
     '',
   );
   const [name, setName] = useState('');
@@ -59,6 +59,7 @@ const Payment: React.FC = () => {
   }, [clearCart, navigate, paymentError]);
 
   const handlePayment = useCallback(async () => {
+    setModalText('');
     setModalVisible(true);
     setPaymentCompleted(false);
     setPaymentError(false);
@@ -94,9 +95,8 @@ const Payment: React.FC = () => {
         };
       });
 
-      setModalText('Realize o pagamento na maquina de cartão.');
-
-      if (typeCard !== 'amount') {
+      if (typeCard !== 'cash') {
+        setModalText('Realize o pagamento na maquina de cartão.');
         const response = await payment(amount);
         setModalText('Pagamento aprovado, emitindo NFC');
         hash.current = response.hash;
@@ -109,7 +109,7 @@ const Payment: React.FC = () => {
         store: store.companyId,
         products,
         callbackId: store.id,
-        card: typeCard === 'amount' ? 'debit' : typeCard,
+        card: typeCard,
         idIzettle: hash.current,
         name,
         cpf: cpf.replace(/\D/g, ''),
@@ -121,7 +121,14 @@ const Payment: React.FC = () => {
     } catch (err) {
       if (hash.current !== 'null') {
         setModalText('Erro, processando estorno');
-        await refund(hash.current);
+        try {
+          await refund(hash.current);
+          setModalText('Estorno realizado com sucesso.');
+        } catch {
+          setModalText(
+            'Erro ao processar estorno, por favor fale com o lojista.',
+          );
+        }
         setPaymentCompleted(true);
         setPaymentError(true);
       } else {
@@ -135,7 +142,7 @@ const Payment: React.FC = () => {
   const checkOrder = useCallback(
     async (status: 'success' | 'error') => {
       if (status === 'success') {
-        if (typeCard === 'amount') {
+        if (typeCard === 'cash') {
           setModalText('Por favor finalize seu pedido no balcão.');
         } else {
           setModalText('Compra aprovada, retire seu pedido no balcão.');
@@ -143,7 +150,14 @@ const Payment: React.FC = () => {
         setPaymentCompleted(true);
       } else {
         setModalText('Erro ao emitir NFC, realizando estorno.');
-        await refund(hash.current);
+        try {
+          await refund(hash.current);
+          setModalText('Estorno realizado com sucesso.');
+        } catch {
+          setModalText(
+            'Erro ao processar estorno, por favor fale com o lojista.',
+          );
+        }
         setPaymentCompleted(true);
         setPaymentError(true);
       }
@@ -182,7 +196,10 @@ const Payment: React.FC = () => {
               <CardButton>
                 <Button
                   style={[
-                    {backgroundColor: '#fff', color: '#000'},
+                    {
+                      backgroundColor: '#fff',
+                      color: '#000',
+                    },
                     typeCard === 'credit' && {
                       backgroundColor: '#000',
                       color: '#fff',
@@ -209,12 +226,12 @@ const Payment: React.FC = () => {
                 <Button
                   style={[
                     {backgroundColor: '#fff', color: '#000'},
-                    typeCard === 'amount' && {
+                    typeCard === 'cash' && {
                       backgroundColor: '#000',
                       color: '#fff',
                     },
                   ]}
-                  onPress={() => setTypeCard('amount')}>
+                  onPress={() => setTypeCard('cash')}>
                   Dinheiro
                 </Button>
               </CardButton>
