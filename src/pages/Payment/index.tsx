@@ -86,6 +86,15 @@ const Payment: React.FC = () => {
       return;
     }
 
+    if (!cart.length) {
+      setModalText(
+        'Por adicione items ao seu carrinho para realizar uma compra.',
+      );
+      setPaymentCompleted(true);
+      setPaymentError(true);
+      return;
+    }
+
     try {
       const products = cart.map((item) => {
         return {
@@ -174,6 +183,12 @@ const Payment: React.FC = () => {
     socket.on('order-create', handleOrder);
     return () => socket.off('order-create', handleOrder);
   }, [store, checkOrder]);
+
+  useEffect(() => {
+    if (!cart.length) {
+      navigate('Home');
+    }
+  }, [cart.length, navigate]);
 
   return (
     <Container>
