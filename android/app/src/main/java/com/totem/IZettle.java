@@ -117,6 +117,8 @@ public class IZettle extends ReactContextBaseJavaModule {
       internalTraceId = UUID.randomUUID().toString();
       long amountValue = Long.parseLong(amount);
 
+      boolean isInstalments = Float.parseFloat(amount) >= 150;
+
       mPromisePayment = promise;
 
       TransactionReference reference = new TransactionReference.Builder(internalTraceId)
@@ -127,7 +129,7 @@ public class IZettle extends ReactContextBaseJavaModule {
         .amount(amountValue)
         .reference(reference)
         .enableTipping(false) // Only for markets with tipping support
-        .enableInstalments(true) // Only for markets with installments support
+        .enableInstalments(isInstalments) // Only for markets with installments support
         .enableLogin(true) // Mandatory to set
         .build();
 
@@ -153,19 +155,19 @@ public class IZettle extends ReactContextBaseJavaModule {
 
         @Override
         public void onFailure(RetrieveCardPaymentFailureReason reason) {
-            mPromisePayment.reject("no_events", "Refund Failed");
+          mPromisePayment.reject("no_events", "Payment not found");
         }
 
         @Override
         public void onSuccess(CardPaymentPayload payload) {
-            TransactionReference reference = new TransactionReference.Builder(payload.getReferenceId())
-              .put("REFUND_EXTRA_INFO", "Started from home screen")
-              .build();
+          TransactionReference reference = new TransactionReference.Builder(payload.getReferenceId())
+            .put("REFUND_EXTRA_INFO", "Started from home screen")
+            .build();
 
-            Intent intent = new RefundsActivity.IntentBuilder(reactContext.getApplicationContext())
-              .cardPayment(payload)
-              .reference(reference)
-              .build();
+          Intent intent = new RefundsActivity.IntentBuilder(reactContext.getApplicationContext())
+            .cardPayment(payload)
+            .reference(reference)
+            .build();
 
            getCurrentActivity().startActivityForResult(intent, REQUEST_CODE_REFUND);
         }
