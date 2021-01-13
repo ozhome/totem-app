@@ -1,5 +1,6 @@
 # OSX
 #
+**/iZettleSDK.gradle
 .expo
 .DS_Store
 metro-cache/

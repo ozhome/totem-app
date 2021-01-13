@@ -7,7 +7,7 @@
 
 ext.iZettleSDK = [:]
 
-ext.iZettleSDK.githubAccessToken = "b2ca1b1aa086714ed20d9fc9243a194536bd0a56"
-ext.iZettleSDK.clientId = "dc510794-5719-44a4-8ba3-a5c308110c49"
+ext.iZettleSDK.githubAccessToken = ""
+ext.iZettleSDK.clientId = ""
 ext.iZettleSDK.redirectUrlScheme = "oztotem"
 ext.iZettleSDK.redirectUrlHost = "loginCallback"
