@@ -43,7 +43,7 @@ const Header: React.FC<HeaderProps> = ({isHome = false}) => {
             keyExtractor={(item) => `${item.id}`}
             horizontal
             renderItem={({item}) => (
-              <SubCategory name={item.name} id={item.id} />
+              <SubCategory name={item.name} id={item.idOdoo} />
             )}
           />
           <IconRight name="chevron-right" size={40} color="#000" />

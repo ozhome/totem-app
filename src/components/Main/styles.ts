@@ -1,9 +1,8 @@
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 
-// interface IContainer {
-//   show: boolean;
-//export const Container = styled.View<IContainer>`
-// }
+interface IContainer {
+  show: boolean;
+}
 
 /* ${(props) =>
     prodps.show &&
@@ -11,12 +10,16 @@ import styled from 'styled-components/native';
       height: 100%;
     `} */
 
-export const Container = styled.View`
+export const Container = styled.View<IContainer>`
   width: 100%;
   height: 90%;
   position: relative;
   padding: 40px 20px;
   overflow: hidden;
 
-  height: 100%;
+  ${(props) =>
+    props.show &&
+    css`
+      height: 100%;
+    `}
 `;

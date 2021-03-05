@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useCallback, useEffect, useState, useRef} from 'react';
 import {useNavigation} from '@react-navigation/native';
+import {validate} from 'gerador-validador-cpf';
 
 import {useCart} from '../../hooks/cart';
 import {useAuth} from '../../hooks/auth';
@@ -73,15 +74,8 @@ const Payment: React.FC = () => {
       return;
     }
 
-    if (cpf.length !== 14 && cpf.length > 0) {
-      setModalText('Por favor preencha o campo CPF.');
-      setPaymentCompleted(true);
-      setPaymentError(true);
-      return;
-    }
-
-    if (cpf.length === 14 && email === '') {
-      setModalText('Por favor preencha o campo e-mail para ser enviado a NFC.');
+    if (!validate(cpf) && cpf.length !== 0) {
+      setModalText('Por favor informe um CPF válido.');
       setPaymentCompleted(true);
       setPaymentError(true);
       return;
@@ -99,9 +93,10 @@ const Payment: React.FC = () => {
     try {
       const products = cart.map((item) => {
         return {
-          id: item.id,
+          id: item.idOdoo,
           qty: item.quantity,
           price: item.price,
+          discount: 0,
         };
       });
 
@@ -120,9 +115,9 @@ const Payment: React.FC = () => {
         products,
         callbackId: store.id,
         card: typeCard,
-        idIzettle: hash.current,
+        idTotem: hash.current,
         name,
-        cpf: cpf.replace(/\D/g, ''),
+        cpf,
         email,
         shipping: false,
       };
@@ -272,7 +267,7 @@ const Payment: React.FC = () => {
             />
           </Name>
 
-          {cpf.length === 14 && (
+          {validate(cpf) && (
             <Name>
               <Text>Email</Text>
               <Input

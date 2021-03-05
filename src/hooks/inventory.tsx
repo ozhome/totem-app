@@ -2,7 +2,8 @@ import React, {createContext, useCallback, useContext, useState} from 'react';
 import api from '../services/api';
 
 export interface Category {
-  id: number;
+  id: string;
+  idOdoo: number;
   image: string;
   name: string;
   parent_id?: number;
@@ -10,7 +11,8 @@ export interface Category {
 }
 
 export interface Product {
-  id: number;
+  id: string;
+  idOdoo: number;
   name: string;
   description_sale: string;
   price: number;
@@ -18,6 +20,7 @@ export interface Product {
   qty_available: number;
   quantity: number;
   image: string;
+  discount?: number;
 }
 
 interface InventoryContextData {
@@ -60,7 +63,7 @@ const InventoryProvider: React.FC = ({children}) => {
       const categoriesChildren = categories.map((category) => {
         if (
           data.findIndex(
-            (product: Product) => product.pos_categ_id === category.id,
+            (product: Product) => product.pos_categ_id === category.idOdoo,
           ) === -1
         ) {
           return {...category, has_product: false};
@@ -69,7 +72,7 @@ const InventoryProvider: React.FC = ({children}) => {
       });
 
       const sub = categoriesChildren.find((ct) => ct.has_product);
-      setSelectedSub(sub?.id || 0);
+      setSelectedSub(sub?.idOdoo || 0);
 
       const productsUpdate = data.map((product: Product) => {
         const item = items.find((i) => i.id === product.id);
@@ -99,7 +102,7 @@ const InventoryProvider: React.FC = ({children}) => {
       if (index === -1) {
         selectedSubcategory(id);
       } else {
-        selectedSubcategory(categories[index].id);
+        selectedSubcategory(categories[index].idOdoo);
       }
     },
     [categories, selectedSubcategory],

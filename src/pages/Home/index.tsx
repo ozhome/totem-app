@@ -31,7 +31,7 @@ const Home: React.FC = () => {
             keyExtractor={(item) => `${item.id}`}
             numColumns={2}
             renderItem={({item}) => (
-              <Category image={item.image} name={item.name} id={item.id} />
+              <Category image={item.image} name={item.name} id={item.idOdoo} />
             )}
           />
         </Main>

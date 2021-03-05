@@ -6,8 +6,8 @@ interface IMain {
   show?: boolean;
 }
 
-const Main: React.FC<IMain> = ({children}) => {
-  return <Container>{children}</Container>;
+const Main: React.FC<IMain> = ({show, children}) => {
+  return <Container show={!!show}>{children}</Container>;
 };
 
 export default Main;
