@@ -105,6 +105,6 @@ fastlane/Matchfile
 ios/Pods/
 
 package-lock.json
-yarn.lock
 public_storybook/
 .expo
+*.jks
