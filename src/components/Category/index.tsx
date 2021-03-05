@@ -24,10 +24,7 @@ const Category: React.FC<CategoryProps> = ({image, name, id}) => {
     <Container onPress={handleCategory}>
       <Text>{name}</Text>
       <ImageContainer>
-        <Image
-          source={{uri: `data:image/png;base64,${image}`}}
-          resizeMode="contain"
-        />
+        <Image source={{uri: image}} resizeMode="contain" />
       </ImageContainer>
     </Container>
   );

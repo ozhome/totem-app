@@ -48,10 +48,7 @@ const Item: React.FC<ItemProps> = ({item}) => {
       <Title>{item.name}</Title>
       <Description>
         <ImageContainer>
-          <Image
-            source={{uri: `data:image/png;base64,${item.image}`}}
-            resizeMode="contain"
-          />
+          <Image source={{uri: item.image}} resizeMode="contain" />
         </ImageContainer>
         <Info>
           <ScrollView>
