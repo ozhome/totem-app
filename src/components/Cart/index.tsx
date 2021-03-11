@@ -50,7 +50,7 @@ const Cart: React.FC<CartProps> = ({showButtons = true}) => {
 
         <FlatList
           data={cart}
-          contentContainerStyle={{flex: 1}}
+          style={{flexGrow: 0}}
           keyExtractor={(item) => `${item.id}`}
           renderItem={({item}) => <ItemList key={`${item.id}`} item={item} />}
         />

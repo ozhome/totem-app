@@ -18,7 +18,6 @@ interface IzettleContextData {
   loading: boolean;
   checkLogin: boolean;
   payment(value: number): Promise<PaymentResponse>;
-  refund(hash: string): Promise<void>;
   connect(): Promise<void>;
   login(): Promise<void>;
   totem(): Promise<void>;
@@ -63,10 +62,6 @@ const IzettleProvider: React.FC = ({children}) => {
     [],
   );
 
-  const refund = useCallback(async (hash: string) => {
-    await NativeModules.Izettle.openRefund(hash);
-  }, []);
-
   const totem = useCallback(async () => {
     await AsyncStorage.setItem('@RNOzTotem:izettle', 'true');
     setIzettle(true);
@@ -93,7 +88,6 @@ const IzettleProvider: React.FC = ({children}) => {
         login,
         connect,
         payment,
-        refund,
         totem,
       }}>
       {children}

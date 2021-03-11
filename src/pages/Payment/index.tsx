@@ -35,7 +35,7 @@ import {
 const Payment: React.FC = () => {
   const {store} = useAuth();
   const {cart, amount, clearCart} = useCart();
-  const {payment, refund} = useIzettle();
+  const {payment} = useIzettle();
   const {navigate} = useNavigation();
   const hash = useRef('');
 
@@ -126,14 +126,9 @@ const Payment: React.FC = () => {
     } catch (err) {
       if (hash.current !== 'null') {
         setModalText('Erro, processando estorno');
-        try {
-          await refund(hash.current);
-          setModalText('Estorno realizado com sucesso.');
-        } catch {
-          setModalText(
-            'Erro ao processar estorno, por favor fale com o lojista.',
-          );
-        }
+        setModalText(
+          'Erro ao processar a compra, por favor fale com o lojista.',
+        );
         setPaymentCompleted(true);
         setPaymentError(true);
       } else {
@@ -142,7 +137,7 @@ const Payment: React.FC = () => {
         setPaymentError(true);
       }
     }
-  }, [amount, cart, cpf, email, name, payment, refund, store, typeCard]);
+  }, [amount, cart, cpf, email, name, payment, store, typeCard]);
 
   const checkOrder = useCallback(
     async (status: 'success' | 'error') => {
@@ -154,20 +149,14 @@ const Payment: React.FC = () => {
         }
         setPaymentCompleted(true);
       } else {
-        setModalText('Erro ao emitir NFC, realizando estorno.');
-        try {
-          await refund(hash.current);
-          setModalText('Estorno realizado com sucesso.');
-        } catch {
-          setModalText(
-            'Erro ao processar estorno, por favor fale com o lojista.',
-          );
-        }
+        setModalText(
+          'Erro ao processar a compra, por favor fale com o lojista.',
+        );
         setPaymentCompleted(true);
         setPaymentError(true);
       }
     },
-    [refund, typeCard],
+    [typeCard],
   );
 
   useEffect((): any => {
