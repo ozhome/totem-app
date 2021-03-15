@@ -117,7 +117,7 @@ public class IZettle extends ReactContextBaseJavaModule {
       internalTraceId = UUID.randomUUID().toString();
       long amountValue = Long.parseLong(amount);
 
-      boolean isInstalments = Float.parseFloat(amount) >= 150;
+      boolean isInstalments = Float.parseFloat(amount) >= 15000;
 
       mPromisePayment = promise;
 
