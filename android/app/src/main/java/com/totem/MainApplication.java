@@ -1,6 +1,6 @@
 package com.totem;
 
-import androidx.lifecycle.ProcessLifecycleOwner;  
+import androidx.lifecycle.ProcessLifecycleOwner;
 
 import android.app.Application;
 import android.content.Context;
@@ -12,8 +12,8 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
-import com.izettle.payments.android.sdk.IZettleSDK;
-import com.izettle.payments.android.ui.SdkLifecycle;
+// import com.izettle.payments.android.sdk.IZettleSDK;
+// import com.izettle.payments.android.ui.SdkLifecycle;
 import java.util.List;
 
 public class MainApplication extends Application implements ReactApplication {
@@ -51,18 +51,18 @@ public class MainApplication extends Application implements ReactApplication {
   public void onCreate() {
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
-    initIZettleSDK();
+    // initIZettleSDK();
     initializeFlipper(this, getReactNativeHost().getReactInstanceManager());
   }
 
-  private void initIZettleSDK() {
-    String clientId = getString(R.string.client_id);
-    String scheme = getString(R.string.redirect_url_scheme);
-    String host = getString(R.string.redirect_url_host);
-    String redirectUrl = scheme + "://" + host;
-    IZettleSDK.Instance.init(this, clientId, redirectUrl);
-    ProcessLifecycleOwner.get().getLifecycle().addObserver(new SdkLifecycle(IZettleSDK.Instance));
-  }
+  // private void initIZettleSDK() {
+  //   String clientId = getString(R.string.client_id);
+  //   String scheme = getString(R.string.redirect_url_scheme);
+  //   String host = getString(R.string.redirect_url_host);
+  //   String redirectUrl = scheme + "://" + host;
+  //   IZettleSDK.Instance.init(this, clientId, redirectUrl);
+  //   ProcessLifecycleOwner.get().getLifecycle().addObserver(new SdkLifecycle(IZettleSDK.Instance));
+  // }
 
   /**
    * Loads Flipper in React Native templates. Call this in the onCreate method with something like

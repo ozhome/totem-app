@@ -22,7 +22,7 @@ public class BridgePackages implements ReactPackage {
     ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
 
-    modules.add(new IZettle(reactContext));
+    // modules.add(new IZettle(reactContext));
 
     return modules;
   }

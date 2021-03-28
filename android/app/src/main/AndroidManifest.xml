@@ -21,7 +21,7 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
-      <activity
+      <!-- <activity
       android:name="com.izettle.android.auth.OAuthActivity"
       android:launchMode="singleTask"
       android:taskAffinity="@string/oauth_activity_task_affinity">
@@ -36,7 +36,7 @@
         <category android:name="android.intent.category.BROWSABLE" />
       </intent-filter>
 
-      </activity>
+      </activity> -->
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />
     </application>
 
