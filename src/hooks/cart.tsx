@@ -30,7 +30,6 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 const CartProvider: React.FC = ({children}) => {
   const [cart, setCart] = useState<Product[]>([]);
   const [info, setInfo] = useState<IInfo>({
-    card: 'cash',
     cpf: '',
     email: '',
     name: '',
@@ -113,7 +112,12 @@ const CartProvider: React.FC = ({children}) => {
   }, []);
 
   useEffect(() => {
-    const value = cart.reduce((acc, cur) => acc + cur.price * cur.quantity, 0);
+    const value = cart.reduce((acc, cur) => {
+      if (cur.to_weight) {
+        return acc + cur.price * (cur.quantity / 1000);
+      }
+      return acc + cur.price * cur.quantity;
+    }, 0);
     setAmount(parseFloat(value.toFixed(2)));
   }, [cart]);
 
