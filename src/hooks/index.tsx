@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {IzettleProvider} from './izettle';
 import {AuthProvider} from './auth';
 import {InventoryProvider} from './inventory';

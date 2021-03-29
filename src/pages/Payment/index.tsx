@@ -12,7 +12,6 @@ import socket from '../../services/socket';
 
 import Header from '../../components/Header';
 import Button from '../../components/Button';
-import Footer from '../../components/Footer';
 import Main from '../../components/Main';
 import Cart from '../../components/Cart';
 import Modal from '../../components/Modal';
@@ -56,7 +55,7 @@ const Payment: React.FC = () => {
       setModalVisible(false);
     } else {
       clearCart();
-      navigate('Home');
+      navigate('Touch');
     }
   }, [clearCart, navigate, paymentError]);
 
@@ -113,7 +112,7 @@ const Payment: React.FC = () => {
         amount,
         store: store.companyId,
         products,
-        callbackId: store.id,
+        callbackId: hash.current,
         card: typeCard,
         idTotem: hash.current,
         name,
@@ -186,91 +185,88 @@ const Payment: React.FC = () => {
 
       <Cart showButtons={false} />
       <Content>
-        <Main>
-          <Header isHome />
+        <Header text={'Informe seus dados para finalizar o pedido'} goBack />
 
-          <InfoCard>
-            <Text>Forma de pagamento</Text>
+        <InfoCard>
+          <Text>Forma de pagamento</Text>
 
-            <Cards>
-              <CardButton>
-                <Button
-                  style={[
-                    {
-                      backgroundColor: '#fff',
-                      color: '#000',
-                    },
-                    typeCard === 'credit' && {
-                      backgroundColor: '#000',
-                      color: '#fff',
-                    },
-                  ]}
-                  onPress={() => setTypeCard('credit')}>
-                  Credito
-                </Button>
-              </CardButton>
-              <CardButton>
-                <Button
-                  style={[
-                    {backgroundColor: '#fff', color: '#000'},
-                    typeCard === 'debit' && {
-                      backgroundColor: '#000',
-                      color: '#fff',
-                    },
-                  ]}
-                  onPress={() => setTypeCard('debit')}>
-                  Debito
-                </Button>
-              </CardButton>
-              <CardButton>
-                <Button
-                  style={[
-                    {backgroundColor: '#fff', color: '#000'},
-                    typeCard === 'cash' && {
-                      backgroundColor: '#000',
-                      color: '#fff',
-                    },
-                  ]}
-                  onPress={() => setTypeCard('cash')}>
-                  Dinheiro
-                </Button>
-              </CardButton>
-            </Cards>
-          </InfoCard>
+          <Cards>
+            <CardButton>
+              <Button
+                style={[
+                  {
+                    backgroundColor: '#fff',
+                    color: '#000',
+                  },
+                  typeCard === 'credit' && {
+                    backgroundColor: '#000',
+                    color: '#fff',
+                  },
+                ]}
+                onPress={() => setTypeCard('credit')}>
+                Credito
+              </Button>
+            </CardButton>
+            <CardButton>
+              <Button
+                style={[
+                  {backgroundColor: '#fff', color: '#000'},
+                  typeCard === 'debit' && {
+                    backgroundColor: '#000',
+                    color: '#fff',
+                  },
+                ]}
+                onPress={() => setTypeCard('debit')}>
+                Debito
+              </Button>
+            </CardButton>
+            <CardButton>
+              <Button
+                style={[
+                  {backgroundColor: '#fff', color: '#000'},
+                  typeCard === 'cash' && {
+                    backgroundColor: '#000',
+                    color: '#fff',
+                  },
+                ]}
+                onPress={() => setTypeCard('cash')}>
+                Dinheiro
+              </Button>
+            </CardButton>
+          </Cards>
+        </InfoCard>
 
+        <Name>
+          <Text>Seu nome</Text>
+          <Input
+            placeholder="Digite seu nome aqui"
+            value={name}
+            onChangeText={(e) => setName(e)}
+          />
+        </Name>
+
+        <Name>
+          <Text>CPF na nota?</Text>
+          <Input
+            placeholder="Digite seu CPF aqui"
+            value={cpf}
+            onChangeText={(e) => setCPF(cpfMask(e))}
+          />
+        </Name>
+
+        {validate(cpf) && (
           <Name>
-            <Text>Seu nome</Text>
+            <Text>Email</Text>
             <Input
-              placeholder="Digite seu nome aqui"
-              value={name}
-              onChangeText={(e) => setName(e)}
+              placeholder="Digite seu email aqui"
+              value={email}
+              onChangeText={(e) => setEmail(e)}
             />
           </Name>
-
-          <Name>
-            <Text>CPF na nota?</Text>
-            <Input
-              placeholder="Digite seu CPF aqui"
-              value={cpf}
-              onChangeText={(e) => setCPF(cpfMask(e))}
-            />
-          </Name>
-
-          {validate(cpf) && (
-            <Name>
-              <Text>Email</Text>
-              <Input
-                placeholder="Digite seu email aqui"
-                value={email}
-                onChangeText={(e) => setEmail(e)}
-              />
-            </Name>
-          )}
-        </Main>
+        )}
         <Finish>
           <Button onPress={handlePayment}>Finalizar compra</Button>
         </Finish>
-        <Footer />
       </Content>
     </Container>
   );

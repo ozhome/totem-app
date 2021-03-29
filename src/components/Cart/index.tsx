@@ -1,76 +1,42 @@
+import {useNavigation} from '@react-navigation/core';
 import React, {useCallback} from 'react';
-import {FlatList} from 'react-native';
 import IconFeather from 'react-native-vector-icons/Feather';
-import {useNavigation} from '@react-navigation/native';
-
-import ItemList from '../ItemList';
-import Button from '../Button';
 
 import {useCart} from '../../hooks/cart';
 
 import FormatReal from '../../utils/formartReal';
 
-import {
-  Container,
-  Description,
-  Icon,
-  IconNumber,
-  IconSpan,
-  IconText,
-  Total,
-  TotalText,
-} from './styles';
-import {useInventory} from '../../hooks/inventory';
+import {Container, Content, Text} from './styles';
 
 interface CartProps {
   showButtons?: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({showButtons = true}) => {
-  const {cart, amount, clearCart} = useCart();
-  const {clearInventory} = useInventory();
+const Cart: React.FC<CartProps> = ({showButtons}) => {
+  const {amount, cart} = useCart();
+  const {navigate} = useNavigation();
 
-  const {navigate, goBack} = useNavigation();
+  const handleCart = useCallback(() => {
+    if (showButtons) {
+      navigate('Name');
+    } else {
+      navigate('Cart');
+    }
+  }, [navigate, showButtons]);
 
-  const handleClear = useCallback(() => {
-    clearCart();
-    clearInventory();
-  }, [clearCart, clearInventory]);
+  if (!cart.length) {
+    return <></>;
+  }
 
   return (
     <Container>
-      <Description>
-        <Icon>
-          <IconText>Sacola</IconText>
-          <IconFeather name="shopping-bag" size={40} color="#000" />
-          <IconSpan>
-            <IconNumber>{cart.length}</IconNumber>
-          </IconSpan>
-        </Icon>
+      <Content onPress={handleCart}>
+        <IconFeather name="shopping-bag" size={40} color="#000" />
 
-        <FlatList
-          data={cart}
-          style={{flexGrow: 0}}
-          keyExtractor={(item) => `${item.id}`}
-          renderItem={({item}) => <ItemList key={`${item.id}`} item={item} />}
-        />
-      </Description>
+        <Text>{showButtons ? 'Finalizar compra' : 'Ver Sacola'}</Text>
 
-      <Total>
-        <TotalText>{`Total R$ ${FormatReal(amount)}`}</TotalText>
-        {cart.length > 0 && (
-          <>
-            <Button style={{backgroundColor: '#fff'}} onPress={handleClear}>
-              Limpar sacola
-            </Button>
-            <Button
-              style={{backgroundColor: '#fff'}}
-              onPress={() => (!showButtons ? goBack() : navigate('Payment'))}>
-              {!showButtons ? 'Voltar' : 'Finalizar compra'}
-            </Button>
-          </>
-        )}
-      </Total>
+        <Text>{`R$ ${FormatReal(amount)}`}</Text>
+      </Content>
     </Container>
   );
 };

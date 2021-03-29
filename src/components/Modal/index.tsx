@@ -12,8 +12,7 @@ const Modal: React.FC<ModalProps> = ({visible, children}) => {
     <></>
   ) : (
     <Container>
-      <ActivityIndicator size={80} color="#f9a72b" />
-      {children}
+      {children ? children : <ActivityIndicator size={80} color="#f9a72b" />}
     </Container>
   );
 };

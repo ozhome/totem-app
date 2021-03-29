@@ -30,36 +30,40 @@ const SignIn: React.FC = () => {
     [signIn],
   );
   return (
-    <KeyboardAvoidingView
-      style={{flex: 1}}
-      behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-      enabled>
+    <>
       <Modal visible={modalVisible} />
-      <ScrollView
-        keyboardShouldPersistTaps="handled"
-        contentContainerStyle={{flexGrow: 1, paddingBottom: 10}}>
-        <Container>
-          <Image source={logo} />
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{flexGrow: 1, paddingBottom: 10}}>
+          <Container>
+            <Image source={logo} />
 
-          <Title>Faça seu login</Title>
+            <Title>Faça seu login</Title>
 
-          <Form
-            ref={formRef}
-            onSubmit={(data) => handleButton(data)}
-            style={{width: '100%'}}>
-            <Input name="email" icon="mail" placeholder="E-mail" />
-            <Input
-              name="password"
-              icon="lock"
-              placeholder="Senha"
-              secureTextEntry
-            />
+            <Form
+              ref={formRef}
+              onSubmit={(data) => handleButton(data)}
+              style={{width: '100%'}}>
+              <Input name="email" icon="mail" placeholder="E-mail" />
+              <Input
+                name="password"
+                icon="lock"
+                placeholder="Senha"
+                secureTextEntry
+              />
 
-            <Button onPress={() => formRef.current?.submitForm()}>Login</Button>
-          </Form>
-        </Container>
-      </ScrollView>
-    </KeyboardAvoidingView>
+              <Button onPress={() => formRef.current?.submitForm()}>
+                Login
+              </Button>
+            </Form>
+          </Container>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </>
   );
 };
 

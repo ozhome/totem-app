@@ -5,8 +5,11 @@ interface SubCategoryProps {
 }
 
 export const Container = styled.TouchableOpacity`
-  height: 100%;
+  height: 50px;
   margin: 0 22px;
+
+  justify-content: center;
+  align-content: center;
 `;
 
 export const Text = styled.Text<SubCategoryProps>`

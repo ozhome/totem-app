@@ -1,33 +1,20 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {FlatList} from 'react-native';
 
 import Header from '../../components/Header';
 import Item from '../../components/Item';
-import Cart from '../../components/Cart';
-import Modal from '../../components/Modal';
+import Footer from '../../components/Cart';
 import ModalInput from '../../components/ModalInput';
 
-import {Product, useInventory} from '../../hooks/inventory';
+import {Product} from '../../hooks/inventory';
 import {useCart} from '../../hooks/cart';
 
 import {Container, Content} from './styles';
 
-const Items: React.FC = () => {
-  const {selectedSub, products, getInventory} = useInventory();
+const Cart: React.FC = () => {
   const {cart} = useCart();
-  const [modal, setModal] = useState(true);
   const [modalInput, setModalInput] = useState(false);
   const [item, setItem] = useState<Product>({} as Product);
-
-  useEffect(() => {
-    const get = async () => {
-      await getInventory(cart);
-      setModal(false);
-    };
-
-    get();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const openModal = useCallback((data: Product) => {
     setItem(data);
@@ -36,18 +23,13 @@ const Items: React.FC = () => {
 
   return (
     <>
-      <Modal visible={modal} />
       <ModalInput visible={modalInput} item={item} close={setModalInput} />
-      <Cart />
+      <Footer showButtons />
       <Container>
         <Content>
-          <Header
-            text="Selecione os itens que deseja comprar"
-            goBack
-            showCategories
-          />
+          <Header text='Clique em "Finalizar Compra" para concluir' goBack />
           <FlatList
-            data={products.filter((item) => item.pos_categ_id === selectedSub)}
+            data={cart}
             keyExtractor={(item) => `${item.id}`}
             horizontal
             renderItem={({item}) => <Item item={item} openModal={openModal} />}
@@ -58,4 +40,4 @@ const Items: React.FC = () => {
   );
 };
 
-export default Items;
+export default Cart;

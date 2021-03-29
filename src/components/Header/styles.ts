@@ -1,69 +1,61 @@
 import styled from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Feather';
+import {RectButton} from 'react-native-gesture-handler';
 
-export const Container = styled.View`
-  height: 200px;
+export const Container = styled.View``;
+
+export const Content = styled.View`
+  padding: 5px;
   width: 100%;
-  padding: 0 20px;
-  position: relative;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-`;
-
-export const Message = styled.View`
-  height: 120px;
-  width: 100%;
-
-  position: relative;
-
+  height: 80px;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
 `;
 
-export const Image = styled.Image`
-  max-width: 50%;
-  max-height: 80%;
-  margin-right: 20px;
+export const HeaderContent = styled.View`
+  flex-direction: row;
+  align-items: center;
 `;
 
-export const Title = styled.View``;
+export const GoBackContainer = styled(RectButton)`
+  flex-direction: row;
+  align-items: center;
+  margin-right: 30px;
+`;
 
-export const TitleText = styled.Text`
-  font-size: 36px;
+export const GoBackIcon = styled(Icon)``;
+
+export const HeaderText = styled.Text`
+  color: #000;
+  font-size: 22px;
   font-weight: 700;
 `;
 
-export const TitleTexSub = styled.Text`
-  font-size: 22px;
-  font-weight: 400;
+export const HeaderImage = styled.Image`
+  max-height: 90%;
 `;
 
-export const SubCategories = styled.View`
+export const Categories = styled.View`
+  padding: 0 30px;
+  height: 50px;
   width: 100%;
-  height: 75px;
-
-  position: relative;
-  overflow: hidden;
-
-  padding: 0 20px;
 `;
 
 export const IconLeft = styled(Icon)`
   z-index: 99;
   position: absolute;
-  left: -8px;
-  top: 7px;
-  width: 30px;
-  height: 30px;
+  left: -7px;
+  top: 5px;
+  width: 40px;
+  height: 40px;
 `;
 
 export const IconRight = styled(Icon)`
   z-index: 99;
   position: absolute;
-  right: -8px;
-  top: 7px;
-  width: 30px;
-  height: 30px;
+  right: -7px;
+  top: 5px;
+  width: 40px;
+  height: 40px;
 `;

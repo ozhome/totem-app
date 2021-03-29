@@ -1,19 +1,15 @@
 import styled from 'styled-components/native';
+import {RectButton} from 'react-native-gesture-handler';
 
 export const Container = styled.View`
-  height: 250px;
-  width: 100%;
+  height: 100%;
+  width: 325px;
   padding: 10px;
-
-  margin-top: 25px;
-
   border: 2px solid black;
-
   position: relative;
-
-  display: flex;
   flex-direction: column;
   align-items: center;
+  margin-left: 8px;
 
   overflow: hidden;
 `;
@@ -27,26 +23,19 @@ export const Title = styled.Text`
 `;
 
 export const Description = styled.View`
-  height: 80%;
+  flex: 1;
   width: 100%;
-
-  margin-left: 8px;
-  padding: 5px;
-
   position: relative;
-
-  display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: space-between;
   align-items: center;
 `;
 
 export const ImageContainer = styled.View`
-  height: 100%;
-  width: 35%;
+  width: 100%;
+  max-height: 38%;
 
   position: relative;
-  display: flex;
   justify-content: center;
   align-items: center;
 
@@ -59,54 +48,53 @@ export const Image = styled.Image`
 `;
 
 export const Info = styled.View`
-  width: 55%;
-  height: 100%;
-  padding: 8px;
+  width: 100%;
+  height: 49%;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-content: center;
 
   position: relative;
 `;
 
-export const ScrollView = styled.ScrollView`
-  width: 100%;
-  height: 80%;
-  padding-bottom: 15px;
-
-  position: relative;
-  overflow: hidden;
-`;
-
-export const ScrollViewText = styled.Text`
+export const DescriptionText = styled.Text`
   width: 100%;
   font-size: 20px;
 `;
 
+export const PriceContainer = styled.View`
+  flex-direction: row;
+  justify-content: center;
+  align-content: center;
+`;
+
 export const Price = styled.Text`
-  width: 100%;
-  font-size: 24px;
+  font-size: 20px;
 `;
 
 export const ContainerItem = styled.View`
-  width: 50px;
-  height: 100%;
+  width: 100%;
+  height: 13%;
 
-  display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-around;
   align-items: center;
 `;
 
+export const ContainerQty = styled(RectButton)`
+  width: 180px;
+  height: 100%;
+  flex-direction: row;
+  justify-content: center;
+`;
+
 export const ContainerItemText = styled.Text`
-  width: 50px;
-  height: 28px;
-  text-align: center;
-  font-size: 28px;
+  font-size: 25px;
 `;
 
 export const ButtonItem = styled.TouchableOpacity`
   width: 40px;
-  height: 40px;
+  height: 100%;
 `;

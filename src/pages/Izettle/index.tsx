@@ -33,30 +33,32 @@ const Izettle: React.FC = () => {
     setModal(checkLogin);
   }, [checkLogin]);
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: 10}}>
+    <>
       <Modal visible={modal} />
-      <Container>
-        <Title>Bem vindo ao Oz Totem.</Title>
+      <ScrollView contentContainerStyle={{flexGrow: 1, paddingBottom: 10}}>
+        <Container>
+          <Title>Bem vindo ao Oz Totem.</Title>
 
-        <Text>
-          Configure sua máquina da Izettle, necessário fazer isso apenas uma
-          vez.
-        </Text>
+          <Text>
+            Configure sua máquina da Izettle, necessário fazer isso apenas uma
+            vez.
+          </Text>
 
-        <Button onPress={openLogin}>1- Login Izettle</Button>
-        <Button onPress={openSettings}>2- Conexão máquina</Button>
+          <Button onPress={openLogin}>1- Login Izettle</Button>
+          <Button onPress={openSettings}>2- Conexão máquina</Button>
 
-        <Text>
-          Agora só fazer o login no totem, necessário fazer isso todo os dias.
-        </Text>
+          <Text>
+            Agora só fazer o login no totem, necessário fazer isso todo os dias.
+          </Text>
 
-        <TextAtt>
-          ATENÇÃO: Para voltar a essa tela é necessário apagar os dados de
-          memoria do App.
-        </TextAtt>
-        <Button onPress={openFinish}>3- Iniciar Totem</Button>
-      </Container>
-    </ScrollView>
+          <TextAtt>
+            ATENÇÃO: Para voltar a essa tela é necessário apagar os dados de
+            memoria do App.
+          </TextAtt>
+          <Button onPress={openFinish}>3- Iniciar Totem</Button>
+        </Container>
+      </ScrollView>
+    </>
   );
 };
 

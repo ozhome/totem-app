@@ -12,20 +12,22 @@ import {
   ImageContainer,
   Info,
   ContainerItem,
+  PriceContainer,
   Price,
   ButtonItem,
   ContainerItemText,
+  ContainerQty,
   Image,
-  ScrollView,
-  ScrollViewText,
+  DescriptionText,
   Title,
 } from './styles';
 
 interface ItemProps {
   item: Product;
+  openModal(item: Product): void;
 }
 
-const Item: React.FC<ItemProps> = ({item}) => {
+const Item: React.FC<ItemProps> = ({item, openModal}) => {
   const {plusCart, minusCart} = useCart();
   const {updateInventory} = useInventory();
 
@@ -43,6 +45,10 @@ const Item: React.FC<ItemProps> = ({item}) => {
     }
   }, [item, minusCart, updateInventory]);
 
+  const inputAdd = useCallback(() => {
+    openModal(item);
+  }, [item, openModal]);
+
   return (
     <Container>
       <Title>{item.name}</Title>
@@ -51,16 +57,23 @@ const Item: React.FC<ItemProps> = ({item}) => {
           <Image source={{uri: item.image}} resizeMode="contain" />
         </ImageContainer>
         <Info>
-          <ScrollView>
-            <ScrollViewText>{item.description_sale}</ScrollViewText>
-          </ScrollView>
-          <Price>{`R$ ${formatReal(item.price)}`}</Price>
+          <DescriptionText>
+            {item.description_sale.length > 100
+              ? item.description_sale.substr(0, 100) + '...'
+              : item.description_sale || ''}
+          </DescriptionText>
+          <PriceContainer>
+            <Price>{`R$ ${formatReal(item.price)}`}</Price>
+          </PriceContainer>
         </Info>
         <ContainerItem>
           <ButtonItem onPress={handleMinus}>
             <Icon name="minus-circle" color="#000" size={40} />
           </ButtonItem>
-          <ContainerItemText>{item.quantity}</ContainerItemText>
+          <ContainerQty onPress={inputAdd}>
+            <ContainerItemText>{item.quantity}</ContainerItemText>
+            <ContainerItemText>{item.to_weight ? 'g' : ''}</ContainerItemText>
+          </ContainerQty>
           <ButtonItem onPress={handlePlus}>
             <Icon name="plus-circle" color="#000" size={40} />
           </ButtonItem>

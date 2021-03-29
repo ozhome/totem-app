@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {FlatList} from 'react-native';
 
-import Header from '../../components/Header';
-import Main from '../../components/Main';
 import Category from '../../components/Category';
+import Header from '../../components/Header';
 import Cart from '../../components/Cart';
 
 import {useInventory} from '../../hooks/inventory';
@@ -21,22 +20,22 @@ const Home: React.FC = () => {
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <Container>
+    <>
       <Cart />
-      <Content>
-        <Main show>
-          <Header isHome />
+      <Container>
+        <Content>
+          <Header text="Selecione uma categoria" />
           <FlatList
             data={categories.filter((ca) => !ca.parent_id)}
-            keyExtractor={(item) => `${item.id}`}
-            numColumns={2}
+            keyExtractor={(item) => item.id}
+            numColumns={3}
             renderItem={({item}) => (
               <Category image={item.image} name={item.name} id={item.idOdoo} />
             )}
           />
-        </Main>
-      </Content>
-    </Container>
+        </Content>
+      </Container>
+    </>
   );
 };
 

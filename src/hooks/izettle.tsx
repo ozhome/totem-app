@@ -28,7 +28,7 @@ const IzettleContext = createContext<IzettleContextData>(
 );
 
 const IzettleProvider: React.FC = ({children}) => {
-  const [izettle, setIzettle] = useState(false);
+  const [izettle, setIzettle] = useState(true);
   const [checkLogin, setLogin] = useState(false);
   const [loading, setLoading] = useState(false);
 

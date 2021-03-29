@@ -8,11 +8,20 @@ import React, {
 
 import {Product} from './inventory';
 
+interface IInfo {
+  name: string;
+  cpf: string;
+  email: string;
+}
+
 interface CartContextData {
   cart: Product[];
+  info: IInfo;
+  setInfo(data: IInfo): void;
   amount: number;
   plusCart(item: Product): Product;
   minusCart(item: Product): Product;
+  updateCart(item: Product): void;
   clearCart(): void;
 }
 
@@ -20,6 +29,12 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 
 const CartProvider: React.FC = ({children}) => {
   const [cart, setCart] = useState<Product[]>([]);
+  const [info, setInfo] = useState<IInfo>({
+    card: 'cash',
+    cpf: '',
+    email: '',
+    name: '',
+  });
   const [amount, setAmount] = useState(0);
 
   const plusCart = useCallback(
@@ -72,6 +87,27 @@ const CartProvider: React.FC = ({children}) => {
     [cart],
   );
 
+  const updateCart = useCallback(
+    (item: Product) => {
+      const index = cart.findIndex((product) => product.id === item.id);
+      if (index >= 0) {
+        setCart((state) =>
+          state
+            .map((i) => {
+              if (i.id === item.id) {
+                return item;
+              }
+              return i;
+            })
+            .filter((i) => i.quantity > 0),
+        );
+      } else if (item.quantity > 0) {
+        setCart((state) => [...state, item]);
+      }
+    },
+    [cart],
+  );
+
   const clearCart = useCallback(() => {
     setCart([]);
   }, []);
@@ -83,7 +119,16 @@ const CartProvider: React.FC = ({children}) => {
 
   return (
     <CartContext.Provider
-      value={{cart, amount, plusCart, minusCart, clearCart}}>
+      value={{
+        cart,
+        info,
+        setInfo,
+        amount,
+        plusCart,
+        minusCart,
+        updateCart,
+        clearCart,
+      }}>
       {children}
     </CartContext.Provider>
   );
