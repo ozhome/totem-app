@@ -1,6 +1,6 @@
 package com.totem;
 
-import androidx.lifecycle.ProcessLifecycleOwner;  
+import androidx.lifecycle.ProcessLifecycleOwner;
 
 import android.app.Application;
 import android.content.Context;
