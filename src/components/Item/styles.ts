@@ -4,7 +4,7 @@ import {RectButton} from 'react-native-gesture-handler';
 export const Container = styled.View`
   height: 100%;
   width: 325px;
-  padding: 10px;
+  padding: 5px 10px;
   border: 2px solid black;
   position: relative;
   flex-direction: column;
@@ -16,7 +16,7 @@ export const Container = styled.View`
 
 export const Title = styled.Text`
   font-weight: 700;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 28px;
   margin-bottom: 8px;
   text-align: center;
@@ -33,7 +33,7 @@ export const Description = styled.View`
 
 export const ImageContainer = styled.View`
   width: 100%;
-  max-height: 38%;
+  flex: 1;
 
   position: relative;
   justify-content: center;
@@ -49,8 +49,6 @@ export const Image = styled.Image`
 
 export const Info = styled.View`
   width: 100%;
-  height: 49%;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -61,7 +59,8 @@ export const Info = styled.View`
 
 export const DescriptionText = styled.Text`
   width: 100%;
-  font-size: 20px;
+  font-size: 18px;
+  text-align: justify;
 `;
 
 export const PriceContainer = styled.View`
@@ -76,7 +75,6 @@ export const Price = styled.Text`
 
 export const ContainerItem = styled.View`
   width: 100%;
-  height: 13%;
 
   flex-direction: row;
   justify-content: space-around;

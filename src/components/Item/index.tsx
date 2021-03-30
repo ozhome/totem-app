@@ -1,4 +1,4 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useRef} from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {Product, useInventory} from '../../hooks/inventory';
@@ -30,6 +30,7 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({item, openModal}) => {
   const {plusCart, minusCart} = useCart();
   const {updateInventory} = useInventory();
+  const maxCharacters = useRef(item.name.length > 40 ? 60 : 95);
 
   const handlePlus = useCallback(() => {
     if (item.quantity + 1 <= item.qty_available) {
@@ -58,8 +59,8 @@ const Item: React.FC<ItemProps> = ({item, openModal}) => {
         </ImageContainer>
         <Info>
           <DescriptionText>
-            {item.description_sale.length > 100
-              ? item.description_sale.substr(0, 100) + '...'
+            {item.description_sale.length > maxCharacters.current
+              ? item.description_sale.substr(0, maxCharacters.current) + '...'
               : item.description_sale || ''}
           </DescriptionText>
           <PriceContainer>

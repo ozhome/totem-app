@@ -1,5 +1,11 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {Image, ScrollView, KeyboardAvoidingView, Platform} from 'react-native';
+import {
+  Image,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
+  TextInput,
+} from 'react-native';
 import {Form} from '@unform/mobile';
 import {FormHandles} from '@unform/core';
 
@@ -15,6 +21,8 @@ import {Container, Title} from './styles';
 
 const SignIn: React.FC = () => {
   const formRef = useRef<FormHandles>(null);
+  const passwordInputRef = useRef<TextInput>(null);
+
   const {signIn} = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -48,12 +56,27 @@ const SignIn: React.FC = () => {
               ref={formRef}
               onSubmit={(data) => handleButton(data)}
               style={{width: '100%'}}>
-              <Input name="email" icon="mail" placeholder="E-mail" />
               <Input
+                name="email"
+                icon="mail"
+                placeholder="E-mail"
+                autoCompleteType="email"
+                keyboardType="email-address"
+                autoCorrect={false}
+                autoCapitalize="none"
+                returnKeyType="next"
+                onSubmitEditing={() => passwordInputRef.current?.focus()}
+              />
+              <Input
+                ref={passwordInputRef}
                 name="password"
                 icon="lock"
                 placeholder="Senha"
+                keyboardType="default"
+                autoCompleteType="password"
                 secureTextEntry
+                returnKeyType="send"
+                onSubmitEditing={() => formRef.current?.submitForm()}
               />
 
               <Button onPress={() => formRef.current?.submitForm()}>
