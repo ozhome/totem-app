@@ -19,6 +19,8 @@ import {
   Categories,
   IconLeft,
   IconRight,
+  HeaderContainerImage,
+  HeaderTextInfo,
 } from './styles';
 
 interface HeaderProps {
@@ -45,9 +47,11 @@ const Header: React.FC<HeaderProps> = ({
               <HeaderText>Voltar</HeaderText>
             </GoBackContainer>
           )}
-          <HeaderText>{text}</HeaderText>
+          <HeaderTextInfo>{text}</HeaderTextInfo>
         </HeaderContent>
-        <HeaderImage source={logo} resizeMode="contain" />
+        <HeaderContainerImage>
+          <HeaderImage source={logo} resizeMode="contain" />
+        </HeaderContainerImage>
       </Content>
       {showCategories && (
         <Categories>

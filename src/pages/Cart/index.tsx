@@ -27,7 +27,7 @@ const Cart: React.FC = () => {
       <Footer showButtons />
       <Container>
         <Content>
-          <Header text='Clique em "Finalizar Compra" para concluir' goBack />
+          <Header text="Finalize a compra" goBack />
           <FlatList
             data={cart}
             keyExtractor={(item) => `${item.id}`}

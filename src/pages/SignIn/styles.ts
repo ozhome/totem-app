@@ -16,6 +16,7 @@ export const Title = styled.Text`
 
 export const TextModal = styled.Text`
   font-size: 22px;
+  text-align: center;
 `;
 
 export const ModalContent = styled.View`

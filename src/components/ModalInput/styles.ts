@@ -16,7 +16,9 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   width: 40%;
+  min-width: 400px;
   height: 80%;
+  max-height: 300px;
   position: relative;
   border-radius: 18px;
   padding: 15px;

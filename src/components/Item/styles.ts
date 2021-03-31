@@ -70,7 +70,9 @@ export const PriceContainer = styled.View`
 `;
 
 export const Price = styled.Text`
+  margin: 7px 0;
   font-size: 20px;
+  font-weight: 700;
 `;
 
 export const ContainerItem = styled.View`

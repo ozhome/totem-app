@@ -86,10 +86,9 @@ const SignIn: React.FC = () => {
             <ActivityIndicator size={80} color="#f9a72b" />
           ) : (
             <>
-              <TextModal>Atualize seu aplicativo.</TextModal>
+              <TextModal>Faça o download da versão mais recente.</TextModal>
               <TextModal>
-                Não nos responsabilizamos caso continue usando uma versão
-                diferente da mais recente.
+                Não nos responsabilizamos caso continue usando essa versão.
               </TextModal>
               <Button onPress={() => handleModal(false)}>Cancelar</Button>
               <Button onPress={() => handleModal(true)}>Ok</Button>

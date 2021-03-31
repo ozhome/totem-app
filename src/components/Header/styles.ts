@@ -21,19 +21,34 @@ export const HeaderContent = styled.View`
 export const GoBackContainer = styled(RectButton)`
   flex-direction: row;
   align-items: center;
-  margin-right: 30px;
+  margin-right: 15px;
 `;
 
 export const GoBackIcon = styled(Icon)``;
 
 export const HeaderText = styled.Text`
   color: #000;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
 `;
 
+export const HeaderTextInfo = styled.Text`
+  color: #000;
+  flex: 1;
+  font-size: 20px;
+  font-weight: 700;
+`;
+
+export const HeaderContainerImage = styled.View`
+  flex: 1;
+  height: 100%;
+  justify-content: flex-end;
+  align-items: flex-end;
+`;
+
 export const HeaderImage = styled.Image`
-  max-height: 90%;
+  height: 100%;
+  max-width: 80px;
 `;
 
 export const Categories = styled.View`

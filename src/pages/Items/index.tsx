@@ -17,7 +17,7 @@ const Items: React.FC = () => {
   const {cart} = useCart();
   const [modal, setModal] = useState(true);
   const [modalInput, setModalInput] = useState(false);
-  const [item, setItem] = useState<Product>({} as Product);
+  const [itemModal, setItem] = useState<Product>({} as Product);
 
   useEffect(() => {
     const get = async () => {
@@ -37,15 +37,11 @@ const Items: React.FC = () => {
   return (
     <>
       <Modal visible={modal} />
-      <ModalInput visible={modalInput} item={item} close={setModalInput} />
+      <ModalInput visible={modalInput} item={itemModal} close={setModalInput} />
       <Cart />
       <Container>
         <Content>
-          <Header
-            text="Selecione os itens que deseja comprar"
-            goBack
-            showCategories
-          />
+          <Header text="Adicione os itens ao carrinho" goBack showCategories />
           <FlatList
             data={products.filter((item) => item.pos_categ_id === selectedSub)}
             keyExtractor={(item) => `${item.id}`}
