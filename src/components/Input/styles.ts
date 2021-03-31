@@ -8,7 +8,7 @@ interface IContainer {
 
 export const Container = styled.View<IContainer>`
   width: 100%;
-  height: 80px;
+  height: 60px;
   padding: 0 20px;
   border-radius: 10px;
   margin-bottom: 8px;

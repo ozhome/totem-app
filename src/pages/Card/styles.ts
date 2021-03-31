@@ -61,7 +61,7 @@ export const ButtonText = styled.Text`
 `;
 
 export const TextModal = styled.Text`
-  font-size: 28px;
+  font-size: 24px;
 `;
 
 export const ModalContent = styled.View`

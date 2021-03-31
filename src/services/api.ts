@@ -1,7 +1,8 @@
 import axios from 'axios';
+import {url} from './index';
 
 const api = axios.create({
-  baseURL: 'https://api-home.ozcandy.com.br',
+  baseURL: url,
 });
 
 export default api;

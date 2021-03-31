@@ -1,6 +1,7 @@
 import {io} from 'socket.io-client';
+import {url} from './index';
 
-const socket = io('https://api-home.ozcandy.com.br');
+const socket = io(url);
 socket.on(
   'connection',
   () => {
