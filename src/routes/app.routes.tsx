@@ -13,7 +13,12 @@ import Card from '../pages/Card';
 const AppStack = createStackNavigator();
 
 const AppRoutes: React.FC = () => (
-  <AppStack.Navigator headerMode="none" initialRouteName="Touch">
+  <AppStack.Navigator
+    headerMode="none"
+    initialRouteName="Touch"
+    screenOptions={{
+      cardStyle: {backgroundColor: '#FFF'},
+    }}>
     <AppStack.Screen name="Touch" component={Touch} />
     <AppStack.Screen name="Home" component={Home} />
     <AppStack.Screen name="Items" component={Items} />
