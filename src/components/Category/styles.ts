@@ -1,6 +1,10 @@
-import styled from 'styled-components/native';
+import styled, {css} from 'styled-components/native';
 
-export const Container = styled.TouchableOpacity`
+interface Props {
+  first: boolean;
+}
+
+export const Container = styled.TouchableOpacity<Props>`
   border-radius: 16px;
   border-width: 2px;
   height: 240px;
@@ -13,7 +17,13 @@ export const Container = styled.TouchableOpacity`
 
   position: relative;
 
-  margin-bottom: 40px;
+  margin-bottom: 15px;
+
+  ${(props) =>
+    props.first &&
+    css`
+      display: none;
+    `}
 `;
 
 export const Text = styled.Text`

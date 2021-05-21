@@ -8,6 +8,7 @@ import Cart from '../pages/Cart';
 import Name from '../pages/Name';
 import Cpf from '../pages/Cpf';
 import Email from '../pages/Email';
+import Discount from '../pages/Discount';
 import Card from '../pages/Card';
 
 const AppStack = createStackNavigator();
@@ -26,6 +27,7 @@ const AppRoutes: React.FC = () => (
     <AppStack.Screen name="Name" component={Name} />
     <AppStack.Screen name="Cpf" component={Cpf} />
     <AppStack.Screen name="Email" component={Email} />
+    <AppStack.Screen name="Discount" component={Discount} />
     <AppStack.Screen name="Card" component={Card} />
   </AppStack.Navigator>
 );

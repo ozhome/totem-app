@@ -10,19 +10,23 @@ import {Container, Content, Text} from './styles';
 
 interface CartProps {
   showButtons?: boolean;
+  noClick?: boolean;
 }
 
-const Cart: React.FC<CartProps> = ({showButtons}) => {
+const Cart: React.FC<CartProps> = ({showButtons, noClick}) => {
   const {amount, cart} = useCart();
   const {navigate} = useNavigation();
 
   const handleCart = useCallback(() => {
+    if (noClick) {
+      return;
+    }
     if (showButtons) {
       navigate('Name');
     } else {
       navigate('Cart');
     }
-  }, [navigate, showButtons]);
+  }, [navigate, noClick, showButtons]);
 
   if (!cart.length) {
     return <></>;
@@ -33,7 +37,9 @@ const Cart: React.FC<CartProps> = ({showButtons}) => {
       <Content onPress={handleCart}>
         <IconFeather name="shopping-bag" size={40} color="#000" />
 
-        <Text>{showButtons ? 'Finalizar compra' : 'Ver Sacola'}</Text>
+        {!noClick && (
+          <Text>{showButtons ? 'Finalizar compra' : 'Ver Sacola'}</Text>
+        )}
 
         <Text>{`R$ ${FormatReal(amount)}`}</Text>
       </Content>

@@ -1,8 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {ActivityIndicator} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 import Header from '../../components/Header';
 import Modal from '../../components/Modal';
+import Cart from '../../components/Cart';
 
 import {useCart} from '../../hooks/cart';
 import {useAuth} from '../../hooks/auth';
@@ -21,11 +23,10 @@ import {
   TextModal,
   ModalContent,
 } from './styles';
-import {ActivityIndicator} from 'react-native';
 
 const Cpf: React.FC = () => {
   const {store} = useAuth();
-  const {cart, amount, clearCart, info, setInfo} = useCart();
+  const {cart, discount, amount, clearCart, info, setInfo} = useCart();
   const {payment} = useIzettle();
   const {navigate} = useNavigation();
   const hash = useRef('');
@@ -61,7 +62,7 @@ const Cpf: React.FC = () => {
           id: item.idOdoo,
           qty: item.quantity,
           price: item.price,
-          discount: 0,
+          discount: item.discount,
           to_weight: item.to_weight,
         };
       });
@@ -86,6 +87,7 @@ const Cpf: React.FC = () => {
         cpf: info.cpf,
         email: info.email,
         shipping: false,
+        discount,
       };
 
       await api.post('/orders/create', body);
@@ -103,7 +105,18 @@ const Cpf: React.FC = () => {
         setPaymentError(true);
       }
     }
-  }, [amount, card, cart, info, payment, store]);
+  }, [
+    amount,
+    card,
+    cart,
+    discount,
+    info.cpf,
+    info.email,
+    info.name,
+    payment,
+    store.companyId,
+    store.id,
+  ]);
 
   const checkOrder = useCallback(
     async (status: 'success' | 'error') => {
@@ -186,6 +199,7 @@ const Cpf: React.FC = () => {
           </Button>
         </Content>
       </Container>
+      <Cart noClick />
     </>
   );
 };

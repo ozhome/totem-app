@@ -3,6 +3,7 @@ import {useNavigation} from '@react-navigation/core';
 import {validate} from 'gerador-validador-cpf';
 
 import Header from '../../components/Header';
+import Cart from '../../components/Cart';
 
 import {useCart} from '../../hooks/cart';
 import {cpfMask} from '../../utils/cpfMask';
@@ -33,28 +34,31 @@ const Cpf: React.FC = () => {
       navigate('Email');
     } else {
       setInfo({...info, cpf});
-      navigate('Card');
+      navigate('Discount');
     }
   }, [cpf, info, navigate, setInfo]);
 
   return (
-    <Container>
-      <Header text="CPF na nota" goBack />
-      <Content>
-        <Div>
-          <TextInput
-            value={cpf}
-            placeholder="CPF (opcional)"
-            keyboardType="numeric"
-            onChangeText={(e) => setCpf(cpfMask(e))}
-          />
-          <Text>{error ? 'Informe um CPF válido' : ''}</Text>
-        </Div>
-        <Button onPress={handle}>
-          <ButtonText>Próximo</ButtonText>
-        </Button>
-      </Content>
-    </Container>
+    <>
+      <Container>
+        <Header text="CPF na nota" goBack />
+        <Content>
+          <Div>
+            <TextInput
+              value={cpf}
+              placeholder="CPF (opcional)"
+              keyboardType="numeric"
+              onChangeText={(e) => setCpf(cpfMask(e))}
+            />
+            <Text>{error ? 'Informe um CPF válido' : ''}</Text>
+          </Div>
+          <Button onPress={handle}>
+            <ButtonText>Próximo</ButtonText>
+          </Button>
+        </Content>
+      </Container>
+      <Cart noClick />
+    </>
   );
 };
 

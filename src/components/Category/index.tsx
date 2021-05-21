@@ -9,9 +9,10 @@ interface CategoryProps {
   image: string;
   name: string;
   id: number;
+  first: boolean;
 }
 
-const Category: React.FC<CategoryProps> = ({image, name, id}) => {
+const Category: React.FC<CategoryProps> = ({image, name, id, first}) => {
   const {selectedCategory} = useInventory();
   const {navigate} = useNavigation();
 
@@ -21,7 +22,7 @@ const Category: React.FC<CategoryProps> = ({image, name, id}) => {
   }, [navigate, id, selectedCategory]);
 
   return (
-    <Container onPress={handleCategory}>
+    <Container first={first} onPress={handleCategory}>
       <Text>{name}</Text>
       <ImageContainer>
         <Image source={{uri: image}} resizeMode="contain" />
