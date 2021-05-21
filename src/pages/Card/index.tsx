@@ -26,7 +26,7 @@ import {
 
 const Cpf: React.FC = () => {
   const {store} = useAuth();
-  const {cart, discount, amount, clearCart, info, setInfo} = useCart();
+  const {cart, discount, amount, note, clearCart, info, setInfo} = useCart();
   const {payment} = useIzettle();
   const {navigate} = useNavigation();
   const hash = useRef('');
@@ -88,6 +88,7 @@ const Cpf: React.FC = () => {
         email: info.email,
         shipping: false,
         discount,
+        note,
       };
 
       await api.post('/orders/create', body);
@@ -113,6 +114,7 @@ const Cpf: React.FC = () => {
     info.cpf,
     info.email,
     info.name,
+    note,
     payment,
     store.companyId,
     store.id,

@@ -20,6 +20,8 @@ interface CartContextData {
   info: IInfo;
   setInfo(data: IInfo): void;
   amount: number;
+  note: string;
+  setNote(value: string): void;
   plusCart(item: Product): Product;
   minusCart(item: Product): Product;
   updateCart(item: Product): void;
@@ -32,6 +34,7 @@ const CartContext = createContext<CartContextData>({} as CartContextData);
 const CartProvider: React.FC = ({children}) => {
   const [cart, setCart] = useState<Product[]>([]);
   const [discount, setDiscount] = useState('');
+  const [note, setNote] = useState('');
   const [info, setInfo] = useState<IInfo>({
     cpf: '',
     email: '',
@@ -117,6 +120,7 @@ const CartProvider: React.FC = ({children}) => {
 
   const clearCart = useCallback(() => {
     setCart([]);
+    setNote('');
   }, []);
 
   const aplyDiscount = useCallback((items: Product[], code: string) => {
@@ -145,6 +149,8 @@ const CartProvider: React.FC = ({children}) => {
         info,
         discount,
         setInfo,
+        note,
+        setNote,
         amount,
         plusCart,
         minusCart,

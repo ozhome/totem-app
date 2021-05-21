@@ -34,7 +34,7 @@ const Cpf: React.FC = () => {
       navigate('Email');
     } else {
       setInfo({...info, cpf});
-      navigate('Discount');
+      navigate('Note');
     }
   }, [cpf, info, navigate, setInfo]);
 
