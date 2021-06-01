@@ -33,7 +33,10 @@ const Item: React.FC<ItemProps> = ({item, openModal}) => {
   const maxCharacters = useRef(item.name.length > 40 ? 60 : 95);
 
   const handlePlus = useCallback(() => {
-    if (item.quantity + 1 <= item.qty_available) {
+    if (
+      item.quantity + 1 <= item.qty_available ||
+      (item.to_weight && (item.quantity + 1) / 1000 <= item.qty_available)
+    ) {
       const res = plusCart(item);
       updateInventory(res);
     }

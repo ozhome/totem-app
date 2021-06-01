@@ -6,6 +6,8 @@ import React, {
   useState,
 } from 'react';
 
+import Dinero from 'dinero.js';
+
 import {Product} from './inventory';
 
 interface IInfo {
@@ -129,17 +131,20 @@ const CartProvider: React.FC = ({children}) => {
   }, []);
 
   useEffect(() => {
-    const value = cart.reduce((acc, cur) => {
-      let dis = 1;
-      if (cur.discount) {
-        dis = parseFloat(((100 - cur.discount) / 100).toFixed(2));
-      }
-      if (cur.to_weight) {
-        return acc + cur.price * (cur.quantity / 1000) * dis;
-      }
-      return acc + cur.price * cur.quantity * dis;
-    }, 0);
-    setAmount(parseFloat(value.toFixed(2)));
+    let price = Dinero({amount: 0});
+
+    cart.forEach((value) => {
+      const itemPrice = parseFloat(value.price.toFixed(2).replace(/\D/g, ''));
+      const item = Dinero({
+        amount: itemPrice,
+      })
+        .multiply(value.to_weight ? value.quantity / 1000 : value.quantity)
+        .percentage(100 - (value.discount || 0));
+
+      price = price.add(item);
+    });
+
+    setAmount(price.getAmount() / 100);
   }, [cart]);
 
   return (
