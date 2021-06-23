@@ -24,9 +24,7 @@ interface CartContextData {
   amount: number;
   note: string;
   setNote(value: string): void;
-  plusCart(item: Product): Product;
-  minusCart(item: Product): Product;
-  updateCart(item: Product): void;
+  updateCart(item: Product, insertInput?: boolean): void;
   clearCart(): void;
   aplyDiscount(items: Product[], code: string): void;
 }
@@ -44,81 +42,46 @@ const CartProvider: React.FC = ({children}) => {
   });
   const [amount, setAmount] = useState(0);
 
-  const plusCart = useCallback(
-    (item: Product) => {
-      setDiscount('');
-      const index = cart.findIndex((product) => product.id === item.id);
+  const updateCart = useCallback((item: Product, insertInput = false) => {
+    setCart((state) => {
+      const itemIndex = state.findIndex((product) => product.id === item.id);
+      let qty_available = item.qty_available;
+      let quantity = 0;
+      let sum = item.quantity;
 
-      let products: Product[] = [];
-      if (index >= 0) {
-        products = cart.map((product) => {
-          if (product.id === item.id) {
-            return {
-              ...product,
-              quantity: product.quantity + 1,
-              discount: 0,
-            };
-          }
-          return {...product, discount: 0};
-        });
-      } else {
-        products = [...cart, {...item, quantity: 1, discount: 0}];
-      }
-
-      setCart(products);
-      return {...item, quantity: item.quantity + 1};
-    },
-    [cart],
-  );
-
-  const minusCart = useCallback(
-    (item: Product) => {
-      setDiscount('');
-      const index = cart.findIndex((product) => product.id === item.id);
-
-      if (index >= 0) {
-        const products = cart
-          .map((product) => {
-            if (product.id === item.id) {
-              return {
-                ...product,
-                quantity: product.quantity - 1,
-                discount: 0,
-              };
-            }
-            return {...product, discount: 0};
-          })
-          .filter((product) => product.quantity > 0);
-
-        setCart(products);
-        return {...item, quantity: item.quantity - 1, discount: 0};
-      }
-      return {...item, discount: 0};
-    },
-    [cart],
-  );
-
-  const updateCart = useCallback(
-    (item: Product) => {
-      setDiscount('');
-      const index = cart.findIndex((product) => product.id === item.id);
-      if (index >= 0) {
-        setCart((state) =>
-          state
-            .map((i) => {
-              if (i.id === item.id) {
-                return {...item, discount: 0};
-              }
-              return {...i, discount: 0};
-            })
-            .filter((i) => i.quantity > 0),
+      if (item.to_weight) {
+        qty_available = parseFloat(
+          `${item.qty_available * 1000}`.replace(/\D/g, ''),
         );
-      } else if (item.quantity > 0) {
-        setCart((state) => [...state, {...item, discount: 0}]);
       }
-    },
-    [cart],
-  );
+
+      if (!insertInput) {
+        if (itemIndex >= 0) {
+          sum = state[itemIndex].quantity + item.quantity;
+        } else {
+          sum = item.quantity;
+        }
+      }
+
+      if (sum > qty_available) {
+        quantity = qty_available;
+      } else if (sum <= 0) {
+        quantity = 0;
+      } else {
+        quantity = sum;
+      }
+
+      let items = state;
+
+      if (itemIndex >= 0) {
+        items[itemIndex].quantity = quantity;
+      } else {
+        items.push({...item, quantity});
+      }
+
+      return items.filter((product) => product.quantity > 0);
+    });
+  }, []);
 
   const clearCart = useCallback(() => {
     setCart([]);
@@ -157,8 +120,6 @@ const CartProvider: React.FC = ({children}) => {
         note,
         setNote,
         amount,
-        plusCart,
-        minusCart,
         updateCart,
         clearCart,
         aplyDiscount,

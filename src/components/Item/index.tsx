@@ -1,4 +1,4 @@
-import React, {useCallback, useRef} from 'react';
+import React from 'react';
 import Icon from 'react-native-vector-icons/Feather';
 
 import {Product, useInventory} from '../../hooks/inventory';
@@ -28,30 +28,28 @@ interface ItemProps {
 }
 
 const Item: React.FC<ItemProps> = ({item, openModal}) => {
-  const {plusCart, minusCart} = useCart();
+  const {updateCart} = useCart();
   const {updateInventory} = useInventory();
-  const maxCharacters = useRef(item.name.length > 40 ? 60 : 95);
+  const maxCharacters = item.name.length > 40 ? 60 : 95;
 
-  const handlePlus = useCallback(() => {
-    if (
-      item.quantity + 1 <= item.qty_available ||
-      (item.to_weight && (item.quantity + 1) / 1000 <= item.qty_available)
-    ) {
-      const res = plusCart(item);
-      updateInventory(res);
-    }
-  }, [item, plusCart, updateInventory]);
+  const updateInputValue = (quantity: number, inputSet = false) => {
+    updateInventory({...item, quantity}, inputSet);
+    updateCart({...item, quantity}, inputSet);
+  };
 
-  const handleMinus = useCallback(() => {
-    if (item.quantity) {
-      const res = minusCart(item);
-      updateInventory(res);
-    }
-  }, [item, minusCart, updateInventory]);
+  const handlePlus = () => {
+    const quantity = item.to_weight ? 10 : 1;
+    updateInputValue(quantity);
+  };
 
-  const inputAdd = useCallback(() => {
+  const handleMinus = () => {
+    const quantity = item.to_weight ? -10 : -1;
+    updateInputValue(quantity);
+  };
+
+  const inputAdd = () => {
     openModal(item);
-  }, [item, openModal]);
+  };
 
   return (
     <Container>
@@ -62,8 +60,8 @@ const Item: React.FC<ItemProps> = ({item, openModal}) => {
         </ImageContainer>
         <Info>
           <DescriptionText>
-            {item.description_sale.length > maxCharacters.current
-              ? item.description_sale.substr(0, maxCharacters.current) + '...'
+            {item.description_sale.length > maxCharacters
+              ? item.description_sale.substr(0, maxCharacters) + '...'
               : item.description_sale || ''}
           </DescriptionText>
           <PriceContainer>

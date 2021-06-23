@@ -2,6 +2,7 @@ import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import Home from '../pages/Home';
+import SubCategory from '../pages/SubCategory';
 import Touch from '../pages/Touch';
 import Items from '../pages/Items';
 import Cart from '../pages/Cart';
@@ -23,6 +24,7 @@ const AppRoutes: React.FC = () => (
     }}>
     <AppStack.Screen name="Touch" component={Touch} />
     <AppStack.Screen name="Home" component={Home} />
+    <AppStack.Screen name="SubCategory" component={SubCategory} />
     <AppStack.Screen name="Items" component={Items} />
     <AppStack.Screen name="Cart" component={Cart} />
     <AppStack.Screen name="Name" component={Name} />

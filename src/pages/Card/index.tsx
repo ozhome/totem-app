@@ -64,6 +64,7 @@ const Cpf: React.FC = () => {
           price: item.price,
           discount: item.discount,
           to_weight: item.to_weight,
+          name: item.name,
         };
       });
 

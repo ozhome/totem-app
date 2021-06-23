@@ -34,7 +34,7 @@ interface InventoryContextData {
   getCategories(): Promise<void>;
   selectedCategory(id: number): void;
   selectedSubcategory(id: number): void;
-  updateInventory(item: Product): void;
+  updateInventory(item: Product, insertInput?: boolean): void;
   clearInventory(): void;
 }
 
@@ -110,22 +110,36 @@ const InventoryProvider: React.FC = ({children}) => {
     [categories, selectedSubcategory],
   );
 
-  const updateInventory = useCallback(
-    (item: Product) => {
-      let check = false;
-      const productsUpdate = products.map((product) => {
+  const updateInventory = useCallback((item: Product, insertInput = false) => {
+    setProducts((state) =>
+      state.map((product) => {
         if (product.id === item.id) {
-          check = true;
-          return item;
+          let quantity = product.quantity;
+          const sum = insertInput
+            ? item.quantity
+            : product.quantity + item.quantity;
+          let qty_available = product.qty_available;
+
+          if (product.to_weight) {
+            qty_available = parseFloat(
+              `${product.qty_available * 1000}`.replace(/\D/g, ''),
+            );
+          }
+
+          if (sum > qty_available) {
+            quantity = qty_available;
+          } else if (sum <= 0) {
+            quantity = 0;
+          } else {
+            quantity = sum;
+          }
+
+          return {...product, quantity};
         }
         return product;
-      });
-      if (check) {
-        setProducts(productsUpdate);
-      }
-    },
-    [products],
-  );
+      }),
+    );
+  }, []);
 
   const clearInventory = useCallback(() => {
     const productsUpdate = products.map((product) => ({

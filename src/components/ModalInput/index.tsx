@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useState} from 'react';
+import React, {useRef} from 'react';
 import {useCart} from '../../hooks/cart';
 
 import {Product, useInventory} from '../../hooks/inventory';
@@ -20,43 +20,17 @@ interface ModalProps {
 }
 
 const ModalInput: React.FC<ModalProps> = ({visible, item, close}) => {
-  const [value, setValue] = useState('');
   const {updateCart} = useCart();
   const {updateInventory} = useInventory();
+  const inputValue = useRef<number>(item.quantity);
 
-  const handle = useCallback(() => {
-    if (!value) {
-      updateInventory({...item, quantity: 0});
-      updateCart({...item, quantity: 0});
-      close(false);
-      return;
+  const handle = () => {
+    if (inputValue.current !== item.quantity) {
+      updateInventory({...item, quantity: inputValue.current || 0}, true);
+      updateCart({...item, quantity: inputValue.current || 0}, true);
     }
-
-    const quantity = parseInt(value, 10);
-
-    if (quantity <= 0) {
-      updateInventory({...item, quantity: 0});
-      updateCart({...item, quantity: 0});
-    } else if (item.to_weight && quantity / 1000 <= item.qty_available) {
-      updateInventory({...item, quantity});
-      updateCart({...item, quantity});
-    } else if (quantity <= item.qty_available) {
-      updateInventory({...item, quantity});
-      updateCart({...item, quantity});
-    } else if (item.to_weight) {
-      updateInventory({...item, quantity: item.qty_available * 1000});
-      updateCart({...item, quantity: item.qty_available});
-    } else {
-      updateInventory({...item, quantity: item.qty_available});
-      updateCart({...item, quantity: item.qty_available});
-    }
-
     close(false);
-  }, [close, item, updateCart, updateInventory, value]);
-
-  useEffect(() => {
-    setValue('');
-  }, [item]);
+  };
 
   return !visible ? (
     <></>
@@ -67,12 +41,12 @@ const ModalInput: React.FC<ModalProps> = ({visible, item, close}) => {
           <Text>Informe a quantidade</Text>
           <TextInput
             keyboardType="numeric"
-            value={value}
             placeholder={`Digite a quantidade${
               item.to_weight ? ' em gramas' : ''
             }`}
             onChangeText={(e) => {
-              return setValue(e.replace(/\D/g, ''));
+              const value = e.replace(/\D/g, '');
+              inputValue.current = parseFloat(value);
             }}
           />
         </Div>
