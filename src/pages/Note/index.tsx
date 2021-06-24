@@ -26,7 +26,7 @@ const Note: React.FC = () => {
           <Div>
             <TextInput
               value={data}
-              placeholder="Observação (opcional)"
+              placeholder="Observação para entrega ou retirada"
               onChangeText={(e) => setData(e)}
             />
           </Div>

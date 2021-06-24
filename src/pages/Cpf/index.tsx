@@ -46,7 +46,7 @@ const Cpf: React.FC = () => {
           <Div>
             <TextInput
               value={cpf}
-              placeholder="CPF (opcional)"
+              placeholder="CPF"
               keyboardType="numeric"
               onChangeText={(e) => setCpf(cpfMask(e))}
             />

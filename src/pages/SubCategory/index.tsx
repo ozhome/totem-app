@@ -44,7 +44,7 @@ const SubCategory: React.FC = () => {
       <Cart />
       <Container>
         <Content>
-          <Header text="Selecione uma categoria" />
+          <Header text="Selecione uma categoria" goBack />
           <FlatList
             data={data}
             keyExtractor={(item) => item.id}

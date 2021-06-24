@@ -92,7 +92,7 @@ const Discount: React.FC = () => {
           <Div>
             <TextInput
               value={discount}
-              placeholder="Cupom (opcional)"
+              placeholder="Cupom"
               onChangeText={(e) => setDiscount(e)}
             />
             <Text>{error}</Text>

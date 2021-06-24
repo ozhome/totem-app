@@ -39,7 +39,7 @@ const Name: React.FC = () => {
           <Div>
             <TextInput
               value={name}
-              placeholder="Nome"
+              placeholder="Nome completo"
               onChangeText={(e) => setName(e)}
             />
             <Text>{error ? 'Informe um nome' : ''}</Text>
