@@ -39,15 +39,15 @@ const Cpf: React.FC = () => {
   const [card, setCard] = useState<'credit' | 'debit' | 'cash' | ''>('');
   const [error, setError] = useState(false);
 
-  const handleFinish = useCallback(async () => {
+  const handleFinish = async () => {
     if (paymentError) {
       setModalVisible(false);
     } else {
       clearCart();
-      setInfo({cpf: '', email: '', name: ''});
+      setInfo({cpf: '', email: '', name: '', phone: ''});
       navigate('Touch');
     }
-  }, [clearCart, navigate, paymentError, setInfo]);
+  };
 
   const handlePayment = useCallback(async () => {
     setModalText('');
@@ -87,6 +87,7 @@ const Cpf: React.FC = () => {
         name: info.name,
         cpf: info.cpf,
         email: info.email,
+        phone: info.phone,
         shipping: false,
         discount,
         note,
@@ -112,9 +113,7 @@ const Cpf: React.FC = () => {
     card,
     cart,
     discount,
-    info.cpf,
-    info.email,
-    info.name,
+    info,
     note,
     payment,
     store.companyId,
@@ -151,14 +150,14 @@ const Cpf: React.FC = () => {
     return () => socket.off('order-create', handleOrder);
   }, [store, checkOrder]);
 
-  const handle = useCallback(() => {
+  const handle = () => {
     if (card === '') {
       setError(true);
       return;
     } else {
       handlePayment();
     }
-  }, [card, handlePayment]);
+  };
 
   return (
     <>

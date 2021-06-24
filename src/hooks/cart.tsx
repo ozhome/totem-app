@@ -14,6 +14,7 @@ interface IInfo {
   name: string;
   cpf: string;
   email: string;
+  phone: string;
 }
 
 interface CartContextData {
@@ -39,6 +40,7 @@ const CartProvider: React.FC = ({children}) => {
     cpf: '',
     email: '',
     name: '',
+    phone: '',
   });
   const [amount, setAmount] = useState(0);
 
