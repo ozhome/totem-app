@@ -32,6 +32,10 @@ export const TextInput = styled.TextInput`
   font-size: 22px;
 `;
 
+export const Margin = styled.View`
+  margin-top: 30px;
+`;
+
 export const Button = styled(RectButton)`
   width: 100%;
   height: 45px;

@@ -10,6 +10,7 @@ import {
   Container,
   Content,
   Div,
+  Margin,
   TextInput,
   Button,
   ButtonText,
@@ -38,10 +39,11 @@ const Email: React.FC = () => {
         <Content>
           <Div>
             <TextInput
-              placeholder="Telefone"
+              placeholder="Celular"
               keyboardType="phone-pad"
               onChangeText={(e) => (phone.current = e)}
             />
+            <Margin />
             <TextInput
               placeholder="E-mail"
               keyboardType="email-address"
