@@ -25,9 +25,15 @@ const Email: React.FC = () => {
   const {navigate} = useNavigation();
 
   const handle = () => {
-    if (!email.current || !phone.current) {
+    if (
+      !phone.current ||
+      phone.current.length < 8 ||
+      phone.current.length > 11
+    ) {
       setError(true);
+      return;
     }
+    setError(false);
     setInfo({...info, email: email.current, phone: phone.current});
     navigate('Note');
   };
@@ -43,13 +49,13 @@ const Email: React.FC = () => {
               keyboardType="phone-pad"
               onChangeText={(e) => (phone.current = e)}
             />
+            <Text>{error ? 'Informe um celular válido' : ''}</Text>
             <Margin />
             <TextInput
               placeholder="E-mail"
               keyboardType="email-address"
               onChangeText={(e) => (email.current = e)}
             />
-            <Text>{error ? 'Informe um nome' : ''}</Text>
           </Div>
           <Button onPress={handle}>
             <ButtonText>Próximo</ButtonText>

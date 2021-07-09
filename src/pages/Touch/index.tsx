@@ -27,7 +27,7 @@ const Touch: React.FC = () => {
   return (
     <Container onPress={() => navigate('Home')}>
       <Title>
-        <TitleText>Bem vindo a Oz</TitleText>
+        <TitleText>Bem vindo a Oz Home</TitleText>
         <TitleTexSub>Toque na tela para fazer seu pedido</TitleTexSub>
       </Title>
       <Image source={logo} resizeMode="contain" />

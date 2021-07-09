@@ -29,13 +29,8 @@ const Cpf: React.FC = () => {
       setError(true);
       return;
     }
-    if (cpf) {
-      setInfo({...info, cpf});
-      navigate('Email');
-    } else {
-      setInfo({...info, cpf});
-      navigate('Note');
-    }
+    setInfo({...info, cpf});
+    navigate('Email');
   }, [cpf, info, navigate, setInfo]);
 
   return (
