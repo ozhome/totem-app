@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList} from 'react-native';
+import {FlatList, TouchableHighlight} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 import SubCategory from '../SubCategory';
@@ -42,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({
       <Content>
         <HeaderContent>
           {goBack && (
-            <GoBackContainer onPress={() => navigate.goBack()}>
+            <GoBackContainer onPress={navigate.goBack}>
               <GoBackIcon name="chevron-left" size={40} color="#000" />
               <HeaderText>Voltar</HeaderText>
             </GoBackContainer>
@@ -50,7 +50,9 @@ const Header: React.FC<HeaderProps> = ({
           <HeaderTextInfo>{text}</HeaderTextInfo>
         </HeaderContent>
         <HeaderContainerImage>
-          <HeaderImage source={logo} resizeMode="contain" />
+          <TouchableHighlight onPress={navigate.goBack}>
+            <HeaderImage source={logo} resizeMode="contain" />
+          </TouchableHighlight>
         </HeaderContainerImage>
       </Content>
       {showCategories && (

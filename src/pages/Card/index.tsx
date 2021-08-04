@@ -1,5 +1,10 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {ActivityIndicator} from 'react-native';
+import {
+  ActivityIndicator,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/core';
 
 import Header from '../../components/Header';
@@ -22,6 +27,8 @@ import {
   ButtonText,
   TextModal,
   ModalContent,
+  ContainerButton,
+  TextDiscount,
 } from './styles';
 
 const Cpf: React.FC = () => {
@@ -48,6 +55,10 @@ const Cpf: React.FC = () => {
       navigate('Touch');
     }
   };
+
+  const handleDiscount = useCallback(() => {
+    navigate('Discount');
+  }, [navigate]);
 
   const handlePayment = useCallback(async () => {
     setModalText('');
@@ -172,36 +183,55 @@ const Cpf: React.FC = () => {
           )}
         </ModalContent>
       </Modal>
-      <Container>
-        <Header text="Forma de pagamento" goBack />
-        <Content>
-          <Div>
-            <Button
-              custom
-              select={card === 'cash'}
-              onPress={() => setCard('cash')}>
-              <ButtonText>Dinheiro</ButtonText>
-            </Button>
-            <Button
-              custom
-              select={card === 'credit'}
-              onPress={() => setCard('credit')}>
-              <ButtonText>Cartão de crédito</ButtonText>
-            </Button>
-            <Button
-              custom
-              select={card === 'debit'}
-              onPress={() => setCard('debit')}>
-              <ButtonText>Cartão de debito</ButtonText>
-            </Button>
-            <Text>{error ? 'Selecione a forma de pagamento' : ''}</Text>
-          </Div>
-          <Button onPress={handle}>
-            <ButtonText>Finalizar pagamento</ButtonText>
-          </Button>
-        </Content>
-      </Container>
-      <Cart noClick />
+      <KeyboardAvoidingView
+        style={{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled>
+        <ScrollView
+          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{flexGrow: 1, paddingBottom: 10}}>
+          <Container>
+            <Header text="Forma de pagamento" goBack />
+            <Content>
+              <Div>
+                <Button
+                  custom
+                  select={card === 'cash'}
+                  onPress={() => setCard('cash')}>
+                  <ButtonText>Dinheiro</ButtonText>
+                </Button>
+                <Button
+                  custom
+                  select={card === 'credit'}
+                  onPress={() => setCard('credit')}>
+                  <ButtonText>Cartão de crédito</ButtonText>
+                </Button>
+                <Button
+                  custom
+                  select={card === 'debit'}
+                  onPress={() => setCard('debit')}>
+                  <ButtonText>Cartão de debito</ButtonText>
+                </Button>
+                <Text>{error ? 'Selecione a forma de pagamento' : ''}</Text>
+              </Div>
+              <ContainerButton>
+                <Div>
+                  <Button onPress={handleDiscount}>
+                    <ButtonText>Adicionar cupom</ButtonText>
+                  </Button>
+                  <TextDiscount>
+                    {discount ? `Cupom "${discount}" aplicado.` : ''}
+                  </TextDiscount>
+                </Div>
+                <Button onPress={handle}>
+                  <ButtonText>Finalizar pagamento</ButtonText>
+                </Button>
+              </ContainerButton>
+            </Content>
+          </Container>
+          <Cart noClick />
+        </ScrollView>
+      </KeyboardAvoidingView>
     </>
   );
 };

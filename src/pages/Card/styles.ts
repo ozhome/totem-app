@@ -30,11 +30,24 @@ export const Text = styled.Text`
   color: #c53030;
 `;
 
+export const TextDiscount = styled.Text`
+  font-size: 20px;
+  color: #000;
+  margin: 10px auto 20px;
+`;
+
 export const TextInput = styled.TextInput`
   width: 100%;
   height: 60px;
   border-bottom-width: 1px;
   font-size: 22px;
+`;
+
+export const ContainerButton = styled.View`
+  height: 150px;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
 `;
 
 export const Button = styled(RectButton)<IButton>`

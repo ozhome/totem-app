@@ -28,7 +28,7 @@ const Discount: React.FC = () => {
   const [discount, setDiscount] = useState('');
   const [error, setError] = useState('');
   const [modal, setModal] = useState(false);
-  const {navigate} = useNavigation();
+  const {goBack} = useNavigation();
 
   const handle = useCallback(async () => {
     try {
@@ -50,7 +50,7 @@ const Discount: React.FC = () => {
       let items: Product[];
       if (data.type === 'category') {
         items = cart.map((item) => {
-          if (data.ids.includes(item.pos_categ_id)) {
+          if (data.allProducts || data.ids.includes(item.pos_categ_id)) {
             activeDiscount = true;
             return {...item, discount: data.percentage};
           }
@@ -58,7 +58,7 @@ const Discount: React.FC = () => {
         });
       } else {
         items = cart.map((item) => {
-          if (data.ids.includes(item.idOdoo)) {
+          if (data.allProducts || data.ids.includes(item.idOdoo)) {
             activeDiscount = true;
             return {...item, discount: data.percentage};
           }
@@ -68,7 +68,7 @@ const Discount: React.FC = () => {
 
       if (activeDiscount) {
         aplyDiscount(items, data.code);
-        setError(`Cupom de ${data.percentage}% aplicado.`);
+        goBack();
       } else {
         setError('Sem itens para aplicar o cupom.');
       }
@@ -77,11 +77,7 @@ const Discount: React.FC = () => {
     } finally {
       setModal(false);
     }
-  }, [aplyDiscount, cart, discount, store?.store]);
-
-  const next = useCallback(() => {
-    navigate('Card');
-  }, [navigate]);
+  }, [aplyDiscount, cart, discount, goBack, store?.store]);
 
   return (
     <>
@@ -94,15 +90,13 @@ const Discount: React.FC = () => {
               value={discount}
               placeholder="Cupom"
               onChangeText={(e) => setDiscount(e)}
+              onSubmitEditing={handle}
             />
             <Text>{error}</Text>
           </Div>
           <ContainerButton>
             <Button onPress={handle}>
               <ButtonText>Aplicar cupom</ButtonText>
-            </Button>
-            <Button onPress={next}>
-              <ButtonText>Próximo</ButtonText>
             </Button>
           </ContainerButton>
         </Content>

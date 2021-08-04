@@ -13,12 +13,26 @@ export const Container = styled.View`
 
 export const Content = styled.View`
   flex: 1;
-  width: 50%;
+  width: 80%;
   align-self: center;
   justify-content: space-around;
 `;
 
-export const Div = styled.View``;
+export const Form = styled.View`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`;
+
+export const Row = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const Div = styled.View`
+  width: 50%;
+`;
 
 export const Text = styled.Text`
   font-size: 20px;
@@ -26,14 +40,10 @@ export const Text = styled.Text`
 `;
 
 export const TextInput = styled.TextInput`
-  width: 100%;
+  width: 95%;
   height: 60px;
   border-bottom-width: 1px;
   font-size: 22px;
-`;
-
-export const Margin = styled.View`
-  margin-top: 30px;
 `;
 
 export const Button = styled(RectButton)`

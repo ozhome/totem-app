@@ -30,7 +30,6 @@ interface ItemProps {
 const Item: React.FC<ItemProps> = ({item, openModal}) => {
   const {updateCart} = useCart();
   const {updateInventory} = useInventory();
-  const maxCharacters = item.name.length > 40 ? 60 : 95;
 
   const updateInputValue = (quantity: number, inputSet = false) => {
     updateInventory({...item, quantity}, inputSet);
@@ -59,10 +58,8 @@ const Item: React.FC<ItemProps> = ({item, openModal}) => {
           <Image source={{uri: item.image}} resizeMode="contain" />
         </ImageContainer>
         <Info>
-          <DescriptionText>
-            {item.description_sale.length > maxCharacters
-              ? item.description_sale.substr(0, maxCharacters) + '...'
-              : item.description_sale || ''}
+          <DescriptionText numberOfLines={3}>
+            {item.description_sale}
           </DescriptionText>
           <PriceContainer>
             <Price>{`R$ ${formatReal(item.price)}`}</Price>

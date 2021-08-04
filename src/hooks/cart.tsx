@@ -10,7 +10,7 @@ import Dinero from 'dinero.js';
 
 import {Product} from './inventory';
 
-interface IInfo {
+export interface IInfo {
   name: string;
   cpf: string;
   email: string;

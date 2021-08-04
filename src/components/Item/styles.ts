@@ -49,6 +49,7 @@ export const Image = styled.Image`
 
 export const Info = styled.View`
   width: 100%;
+  height: 28%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;

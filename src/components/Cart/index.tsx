@@ -22,7 +22,7 @@ const Cart: React.FC<CartProps> = ({showButtons, noClick}) => {
       return;
     }
     if (showButtons) {
-      navigate('Name');
+      navigate('Info');
     } else {
       navigate('Cart');
     }
