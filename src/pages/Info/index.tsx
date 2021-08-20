@@ -54,13 +54,16 @@ const Info: React.FC = () => {
       name: '',
       phone: '',
     };
-    if (!validate(infoPage.cpf) || !infoPage.cpf) {
+    if (infoPage.cpf.length > 0 && !validate(infoPage.cpf)) {
       errorCurrent.cpf = 'CPF inválido';
     }
-    if (infoPage.email.length <= 4) {
+    if (infoPage.email.length && infoPage.email.length <= 4) {
       errorCurrent.email = 'Informe um e-mail.';
     }
-    if (infoPage.phone.length < 14 || infoPage.phone.length > 16) {
+    if (
+      infoPage.phone.length &&
+      (infoPage.phone.length < 14 || infoPage.phone.length > 16)
+    ) {
       errorCurrent.phone = 'Informe um celular válido.';
     }
     if (!infoPage.name) {
@@ -110,7 +113,7 @@ const Info: React.FC = () => {
                   <TextInput
                     ref={cpfRef}
                     value={infoPage.cpf}
-                    placeholder="CPF"
+                    placeholder="CPF (opcional)"
                     keyboardType="numeric"
                     onChangeText={(e) =>
                       setInfoPage((state) => ({...state, cpf: cpfMask(e)}))
@@ -126,7 +129,7 @@ const Info: React.FC = () => {
                   <TextInput
                     ref={emailRef}
                     value={infoPage.email}
-                    placeholder="E-mail"
+                    placeholder="E-mail (opcional)"
                     keyboardType="email-address"
                     onChangeText={(e) =>
                       setInfoPage((state) => ({...state, email: e}))
@@ -140,7 +143,7 @@ const Info: React.FC = () => {
                   <TextInput
                     ref={phoneRef}
                     value={infoPage.phone}
-                    placeholder="Celular"
+                    placeholder="Celular (opcional)"
                     keyboardType="phone-pad"
                     onChangeText={(e) =>
                       setInfoPage((state) => ({
